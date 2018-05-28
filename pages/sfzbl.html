@@ -18,16 +18,16 @@
             justify-content: center;
             padding: 0;
         }
-        
+
         .form-wrap form .input-wrap:first-child {
             margin-top: 0;
         }
-        
+
         .select {
             width: 160px;
             margin-right: 25px;
         }
-        
+
         .input {
             flex: 1;
         }
@@ -37,26 +37,59 @@
 <body>
     <div class="wrap">
         <header>
-            <div class="menu-name"><span>大厅</span><i class="sm-icon-arrow"></i><span>身份证办理进度查询大厅</span></div>
-            <div class="menu-items"><a href="javascript:showItem();"><i class="icon-menus" style="margin-bottom:0;margin-right:25px"></i></a><a href="../index.html"><i class="icon-home" style="margin-bottom:0"></i></a></div>
+            <div class="menu-name">
+                <span>大厅</span>
+                <i class="sm-icon-arrow"></i>
+                <span>身份证办理进度查询大厅</span>
+            </div>
+            <div class="menu-items">
+                <a href="javascript:showItem();">
+                    <i class="icon-menus" style="margin-bottom:0;margin-right:25px"></i>
+                </a>
+                <a href="../index.html">
+                    <i class="icon-home" style="margin-bottom:0"></i>
+                </a>
+            </div>
         </header>
         <div class="mlist-wrap hide">
             <ul class="mlist">
-                <li><a href="../pages/zbjd.html">周边警点一键查询</a></li>
-                <li><a href="../pages/sfzbl.html">身份证办理进度查询</a></li>
-                <li><a href="../pages/xxyw.html">线下业务办理指南</a></li>
-                <li><a href="../pages/wfcx.html">车辆违法查询</a></li>
-                <li><a href="../pages/xwdt.html">新闻动态</a></li>
-                <li><a href="../pages/crjbl.html">出入境办理进度查询</a></li>
-                <li><a href="../pages/cmcx.html">重名查询</a></li>
-                <li><a href="../pages/jszcx.html">驾驶证信息查询</a></li>
-                <li><a href="../pages/others.html">保安员考试成绩查询</a></li>
-                <li><a href="../pages/others.html">保安员证件办理进度查询</a></li>
-                <li><a href="../pages/others.html">网上事项办理进度查询</a></li>
+                <li>
+                    <a href="../pages/zbjd.html">周边警点一键查询</a>
+                </li>
+                <li>
+                    <a href="../pages/sfzbl.html">身份证办理进度查询</a>
+                </li>
+                <li>
+                    <a href="../pages/xxyw.html">线下业务办理指南</a>
+                </li>
+                <li>
+                    <a href="../pages/wfcx.html">车辆违法查询</a>
+                </li>
+                <li>
+                    <a href="../pages/xwdt.html">新闻动态</a>
+                </li>
+                <li>
+                    <a href="../pages/crjbl.html">出入境办理进度查询</a>
+                </li>
+                <li>
+                    <a href="../pages/cmcx.html">重名查询</a>
+                </li>
+                <li>
+                    <a href="../pages/jszcx.html">驾驶证信息查询</a>
+                </li>
+                <li>
+                    <a href="../pages/others.html">保安员考试成绩查询</a>
+                </li>
+                <li>
+                    <a href="../pages/others.html">保安员证件办理进度查询</a>
+                </li>
+                <li>
+                    <a href="../pages/others.html">网上事项办理进度查询</a>
+                </li>
             </ul>
         </div>
         <script>
-            $(".mlist-wrap").click(function() {
+            $(".mlist-wrap").click(function () {
                 $(".mlist-wrap").toggleClass("hide");
             })
 
@@ -76,7 +109,8 @@
                     温馨提示：身份证进度查询功能只能查询互联网+便民服务平台用户正在办理的身份证进度信息
                 </div>
                 <div class="input-wrap">
-                    <a href="javascript:check();" class="btn-lg"><span>查</span>询</a>
+                    <a href="javascript:check();" class="btn-lg">
+                        <span>查</span>询</a>
                 </div>
             </form>
         </div>
@@ -87,8 +121,10 @@
 <script>
     function check() {
         let idCode = $("input[name='idCode']").val().replace(/\s+/g, "");
-        let reg = new RegExp("^((1[1-5])|(2[1-3])|(3[1-7])|(4[1-6])|(5[0-4])|(6[1-5])|71|(8[12])|91)\\d{4}(((19|20)\\d{2}(0[13-9]|1[012])(0[1-9]|[12]\\d|30))|((19|20)\\d{2}(0[13578]|1[02])31)|((19|20)\\d{2}02(0[1-9]|1\\d|2[0-8]))|((19|20)([13579][26]|[2468][048]|0[048])0229))\\d{3}(\\d|X|x)?$", "g");
-        let isId = reg.exec(idCode  );
+        let reg = new RegExp(
+            "^((1[1-5])|(2[1-3])|(3[1-7])|(4[1-6])|(5[0-4])|(6[1-5])|71|(8[12])|91)\\d{4}(((19|20)\\d{2}(0[13-9]|1[012])(0[1-9]|[12]\\d|30))|((19|20)\\d{2}(0[13578]|1[02])31)|((19|20)\\d{2}02(0[1-9]|1\\d|2[0-8]))|((19|20)([13579][26]|[2468][048]|0[048])0229))\\d{3}(\\d|X|x)?$",
+            "g");
+        let isId = reg.exec(idCode);
         console.log(isId); //不合法返为null
         if (isId == null) {
             $.dialog({
@@ -97,22 +133,26 @@
             return;
         } else {
             var info = {
-                "sfzh": idCode
+                "idCard": idCode
             };
-            var authjson = JSON.stringify(auth);
-            var infojson = JSON.stringify(info);
-            var data = "auth=" + authjson + "&info=" + infojson;
+            var auth = {
+                "time_stamp": new Date().Format()
+            };
             $.ajax({
-                url: urlHead + SFZ,
-                data: data,
-                type: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-                dataType: "json",
-                success: function(res) {
+                type: "POST",
+                url: URLHEAD + SFZ,
+                data: {
+                    info: JSON.stringify(info),
+                    auth: JSON.stringify(auth)
+                },
+                timeout: 5000,
+                success: function (res) {
                     // success
                     console.log(res);
                     let err = res.errCode;
                     switch (err) {
-                        case "1":
+                        case '1':
+                        case '10':
                             $.dialog({
                                 "txt": res.msg
                             });
@@ -121,16 +161,23 @@
                             storage.setItem("sfzbl", JSON.stringify(res));
                             window.location.assign("result.html?cnt=" + "sfz");
                         default:
-                            $.dialog({
-                                "txt": res.msg
-                            });
+                            $.dialog();
                             break;
                     }
                 },
-                fail: function() {
+                error: function () {
                     // fail
                     $.dialog();
                 },
+                complete: function (XMLHttpRequest, status) {
+                    //请求完成后最终执行参数
+                    if (status == 'timeout') {
+                        //超时,status还有success,error等值的情况
+                        $.dialog({
+                            "txt": '请求超时...'
+                        });
+                    }
+                }
             })
         }
         console.log(info);
