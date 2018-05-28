@@ -1,0 +1,544 @@
+@charset "utf-8";
+
+/* CSS Document */
+
+body {
+    font: 12px/1.5 "微软雅黑", Arial, Tahoma, Helvetica, \5b8b\4f53, sans-serif;
+}
+
+html,
+body,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+fieldset,
+object,
+code,
+em,
+span,
+var,
+legend,
+button,
+input,
+textarea,
+th,
+td,
+a,
+img,
+header,
+footer,
+nav,
+aside,
+audio,
+datalist,
+section {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+}
+
+
+/*清除内外边距*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+    font-size: 100%;
+}
+
+
+/*设置默认字体*/
+
+:focus {
+    outline: 0;
+}
+
+ul,
+ul>li {
+    list-style: none;
+}
+
+
+/*重置列表*/
+
+address,
+caption,
+cite,
+em,
+code,
+dfn,
+th,
+var {
+    font-style: normal;
+    font-weight: normal;
+}
+
+form label {
+    cursor: pointer;
+}
+
+input,
+button,
+select,
+textarea {
+    font-family: inherit;
+    font-size: 100%;
+    outline: none;
+}
+
+textarea {
+    resize: none
+}
+
+input {
+    vertical-align: middle;
+}
+
+img {
+    border: 0;
+}
+
+
+/*重置图片元素*/
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+
+/*重置表格*/
+
+.l {
+    float: left;
+}
+
+.r {
+    float: right;
+}
+
+button,
+input[type="reset"],
+input[type="button"],
+input[type="submit"] {
+    line-height: normal !important;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+input {
+    _filter: chroma(color=#000000);
+}
+
+.posi-rb {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+}
+
+
+/*
+*以下为统一样式
+*/
+
+body {
+    /*min-width: 1000px;*/
+    color: #fff;
+    font-size: 16px;
+    letter-spacing: 3px;
+}
+
+.wrap {
+    background: url("../imgs/bd_bg.png") left top repeat-x;
+    background-size: 100% 100%;
+    padding: 30px;
+    padding-left: 50px;
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    flex-flow: row nowrap;
+    color: #fff;
+    position: relative;
+}
+
+.col {
+    flex: 1;
+}
+
+.col2 {
+    flex: 2;
+}
+
+.col3 {
+    flex: 3;
+}
+
+[class^="col"] {
+    display: block;
+    color: #fff;
+    background-color: #7273b8;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+    font-size: 18px;
+}
+
+.hide {
+    display: none;
+}
+
+.heigher {
+    height: 60px;
+}
+
+.form-wrap {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-wrap {
+    margin-top: 25px;
+    flex: 1;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.label {
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+}
+
+
+/*
+*顶部菜单栏
+*/
+
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    line-height: 64px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+[class^="menu-"] {
+    font-size: 20px;
+    padding: 0 30px;
+}
+
+.menu-name {
+    background-color: #52516d;
+    width: 55%;
+    border-bottom-right-radius: 64px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.menu-items {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.mlist-wrap {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, .4);
+}
+
+.mlist {
+    position: absolute;
+    top: 80px;
+    right: 30px;
+    padding: 25px;
+    width: 525px;
+    display: flex;
+    flex-flow: row wrap;
+    background-color: #2c2a4f;
+    border-radius: 6px;
+}
+
+.mlist::before {
+    content: "";
+    display: block;
+    width: 0px;
+    height: 0px;
+    border: 25px solid #2c2a4f;
+    position: absolute;
+    top: -50px;
+    right: 68px;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-top-color: transparent;
+}
+
+.mlist li {
+    width: 250px;
+    box-sizing: border-box;
+    line-height: 1.5;
+    background-color: #565572;
+    border-radius: 6px;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+}
+
+.mlist li a {
+    color: #fff;
+    display: block;
+}
+
+.mlist li:nth-child(2n) {
+    margin-left: 25px;
+}
+
+.mlist li:last-child {
+    margin-bottom: 0;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: initial;
+}
+
+
+/*
+*按钮
+*/
+
+[class^="btn"] {
+    display: block;
+    background: url("../imgs/btn_bg.png") left top repeat-x;
+    background-size: 100% 100%;
+    font-size: 16px;
+    border-radius: 6px;
+    padding: 5px 10px;
+    color: #fff;
+}
+
+.btn-lg {
+    display: flex;
+    flex: 1;
+    line-height: 45px;
+    font-size: 18px;
+    justify-content: space-around;
+}
+
+.radio,
+.select,
+.input {
+    box-sizing: border-box;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 6px;
+    background-color: #fff;
+}
+
+
+/*
+*下拉框
+*/
+
+select {
+    /*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
+    border: solid 1px #000;
+    /*很关键：将默认的select选择框样式清除*/
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    /*在选择框的最右侧中间显示小箭头图片*/
+    background: url("../imgs/select.png") no-repeat scroll right center #fff;
+    background-size: contain;
+    /*为下拉小箭头留出一点位置，避免被文字覆盖*/
+    padding-right: 15px;
+}
+
+
+/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+
+select::-ms-expand {
+    display: none;
+}
+
+
+/*
+*图标
+*/
+
+.icon-xxyw {
+    background: url("../imgs/i_xxyw.png") center center no-repeat;
+}
+
+.icon-wfcx {
+    background: url("../imgs/i_wfcx.png") center center no-repeat;
+}
+
+.icon-zbjd {
+    background: url("../imgs/i_zbjd.png") center center no-repeat;
+}
+
+.icon-sfzbl {
+    background: url("../imgs/i_sfzbl.png") center center no-repeat;
+}
+
+.icon-xwdt {
+    background: url("../imgs/i_xwdt.png") center center no-repeat;
+}
+
+.icon-crjbl {
+    background: url("../imgs/i_crjbl.png") center center no-repeat;
+}
+
+.icon-cmcx {
+    background: url("../imgs/i_cmcx.png") center center no-repeat;
+}
+
+.icon-jszcx {
+    background: url("../imgs/i_jszcx.png") center center no-repeat;
+}
+
+.icon-others {
+    background: url("../imgs/others.png") center center no-repeat;
+}
+
+.icon-menus {
+    background: url("../imgs/i_menus.png") center center no-repeat;
+}
+
+.icon-home {
+    background: url("../imgs/i_home.png") center center no-repeat;
+}
+
+.icon-car {
+    background: url("../imgs/i_car.png") center center no-repeat;
+}
+
+.icon-truck {
+    background: url("../imgs/i_truck.png") center center no-repeat;
+}
+
+.icon-back {
+    background: url("../imgs/i_back.png") center center no-repeat;
+}
+
+.icon-ok {
+    background: url("../imgs/i_ok.png") center center no-repeat;
+}
+
+.icon-others1 {
+    background: url("../imgs/i_others1.png") center center no-repeat;
+}
+
+.icon-others2 {
+    background: url("../imgs/i_others2.png") center center no-repeat;
+}
+
+.icon-others3 {
+    background: url("../imgs/i_others3.png") center center no-repeat;
+}
+
+.icon-traffic {
+    background: url("../imgs/i_traffic.png") center center no-repeat;
+}
+
+.icon-hzyw {
+    background: url("../imgs/i_hzyw.png") center center no-repeat;
+}
+
+.icon-kgyw {
+    background: url("../imgs/i_kgyw.png") center center no-repeat;
+}
+
+.icon-xfyw {
+    background: url("../imgs/i_xfyw.png") center center no-repeat;
+}
+
+.icon-wayw {
+    background: url("../imgs/i_wayw.png") center center no-repeat;
+}
+
+.icon-zayw {
+    background: url("../imgs/i_zayw.png") center center no-repeat;
+}
+
+.icon-crjyw {
+    background: url("../imgs/i_crjyw.png") center center no-repeat;
+}
+
+[class^="icon"] {
+    display: block;
+    height: 45px;
+    width: 45px;
+    background-size: contain;
+}
+
+.sm-icon-tel {
+    background: url("../imgs/i_tel.png") center center no-repeat;
+}
+
+.sm-icon-arrow {
+    background: url("../imgs/i_arrow.png") center center no-repeat;
+    margin: 0 15px;
+}
+
+.sm-icon-yuan {
+    background: url("../imgs/i_yuan.png") center center no-repeat;
+    margin: 0 15px;
+}
+
+.sm-icon-goal {
+    background: url("../imgs/i_goal.png") center center no-repeat;
+    margin: 0 15px;
+}
+
+[class^="sm-icon"] {
+    display: inline-block;
+    vertical-align: middle;
+    height: 20px;
+    width: 20px;
+    background-size: contain;
+}

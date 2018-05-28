@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/dialog.css">
+    <link rel="stylesheet" href="../css/result.css">
+    <title>查询结果</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="../js/dialog.js"></script>
+    <script src="../js/globaldata.js"></script>
+    <style>
+        .wrap {
+            position: relative;
+            padding-top: 80px;
+            font-size: 18px;
+        }
+        
+        .result {
+            width: 100%;
+        }
+        
+        .result .cnt {
+            margin: 15px;
+        }
+        
+        .result .cnt-wrap {
+            padding-left: 25px;
+            padding-right: 45px;
+            padding-top: 120px;
+            border-left: 1px solid #fff;
+            position: relative;
+            min-height: 240px;
+        }
+        
+        .cnt-label {
+            position: absolute;
+            left: -13px;
+            top: 50px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .tab-info {
+            width: 100%;
+            border-width: 1px;
+            border-color: #fff;
+            border-collapse: collapse;
+        }
+        
+        .tab-info {
+            border-right: 1px solid #FFF;
+            border-bottom: 1px solid #FFF;
+            text-align: center;
+        }
+        
+        .tab-info td,
+        .tab-info th {
+            border-left: 1px solid #FFF;
+            border-top: 1px solid #FFF;
+            padding: 30px 0;
+            word-break: break-all;
+        }
+        
+        .tab-info th {
+            padding: 15px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <div class="menu-name"><span>大厅</span><i class="sm-icon-arrow"></i><span>其他查询</span><i class="sm-icon-arrow"></i><span id="title">保安员考试成绩查询</span><i class="sm-icon-arrow"></i><span>查询结果展示</span></div>
+            <div class="menu-items"><a href="javascript:history.back();"><i class="icon-back" style="margin-bottom:0;margin-right:25px"></i></a><a href="javascript:showItem();"><i class="icon-menus" style="margin-bottom:0;margin-right:25px"></i></a>
+                <a href="../index.html"><i class="icon-home" style="margin-bottom:0"></i></a>
+            </div>
+        </header>
+        <div class="result">
+            <div class="cnt-wrap">
+                <div class="cnt-label">
+                    <img class="rline" src="../imgs/line1.png" height="25" style="margin-right:10px">查询结果
+                </div>
+                <table class="tab-info">
+
+                </table>
+            </div>
+        </div>
+        <!-- <div class="result kscj">
+            <div class="cnt-label">
+                <img class="rline" src="../imgs/line1.png" height="25" style="margin-right:10px">查询结果
+            </div>
+        </div>
+        <div class="result zjbl">
+            <div class="cnt-label">
+                <img class="rline" src="../imgs/line1.png" height="25" style="margin-right:10px">查询结果
+            </div>
+        </div> -->
+    </div>
+    <div class="mlist-wrap hide">
+        <ul class="mlist">
+            <li><a href="../pages/zbjd.html">周边警点一键查询</a></li>
+            <li><a href="../pages/sfzbl.html">身份证办理进度查询</a></li>
+            <li><a href="../pages/xxyw.html">线下业务办理指南</a></li>
+            <li><a href="../pages/wfcx.html">车辆违法查询</a></li>
+            <li><a href="../pages/xwdt.html">新闻动态</a></li>
+            <li><a href="../pages/crjbl.html">出入境办理进度查询</a></li>
+            <li><a href="../pages/cmcx.html">重名查询</a></li>
+            <li><a href="../pages/jszcx.html">驾驶证信息查询</a></li>
+            <li><a href="../pages/others.html">保安员考试成绩查询</a></li>
+            <li><a href="../pages/others.html">保安员证件办理进度查询</a></li>
+            <li><a href="../pages/others.html">网上事项办理进度查询</a></li>
+        </ul>
+    </div>
+    <script>
+        $(".mlist-wrap").click(function() {
+            $(".mlist-wrap").toggleClass("hide");
+        })
+
+        function showItem() {
+            $(".mlist-wrap").toggleClass("hide");
+        }
+    </script>
+</body>
+<script src="../js/win_size.js"></script>
+<script src="../js/getsearch.js"></script>
+<script>
+    $(function() {
+        var parm = getSearch.parseURL(location.search);;
+        var title = parm.cnt;
+
+        var txt;
+        switch (title) {
+            case "kscj":
+                txt = "保安员考试成绩查询";
+
+                break;
+            case "zjbl":
+                txt = "保安员证件办理进度查询";
+
+                break;
+            case "sxbl":
+                txt = "网上事项办理进度查询";
+                // var res = storage.getItem("sxbl");
+                // var res_sx = JSON.parse(res);
+                let res_sx = {
+                    "resultData": [{
+                        "checkdate": "",
+                        "dueDate": "2",
+                        "projectBillId": "170323410104920216000160",
+                        "projectCaseName": "拘留所被拘留人员亲属会见网上预约",
+                        "projectStatus": "已撤销",
+                        "startDoDate": "2017-03-23 10:43:50",
+                        "unitContactor": ""
+                    }],
+                    "errCode": "0",
+                    "msg": null
+                };
+                let res_data = res_sx.resultData;
+                let res_html = `<tr>
+                        <th>办件名称</th>
+                        <th>联系人</th>
+                        <th>承诺天数</th>
+                        <th>来办时间</th>
+                        <th>审批日期</th>
+                        <th>办件编号</th>
+                    </tr>`;
+                for (let i = 0, len = res_data.length; i < res_data.length; i++) {
+                    res_html += `<tr>
+                        <td>${res_data[i].projectCaseName}</td>
+                        <td>${res_data[i].unitContactor}</td>
+                        <td>${res_data[i].dueDate}</td>
+                        <td>${res_data[i].startDoDate}</td>
+                        <td>${res_data[i].checkdate}</td>
+                        <td>${res_data[i].projectBillId}</td>
+                    </li>`;
+
+                };
+                $(".tab-info").append(res_html);
+                break;
+            default:
+
+                break;
+        };
+        $("#title").text(txt);
+
+    })
+</script>
+
+</html>

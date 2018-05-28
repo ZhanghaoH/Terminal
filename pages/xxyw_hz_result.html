@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/dialog.css">
+    <title>详情界面</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="../js/dialog.js"></script>
+    <script src="../js/globaldata.js"></script>
+    <style>
+        .wrap {
+            position: relative;
+            padding-top: 80px;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .news-wrap {
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+        }
+        
+        .news-wrap li {
+            padding: 5px 0;
+        }
+        
+        ol {
+            list-style-type: none;
+            counter-reset: sectioncounter;
+        }
+        
+        ol li:before {
+            content: counter(sectioncounter) ".";
+            counter-increment: sectioncounter;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <div class="menu-name" style="width:auto"><span>大厅</span><i class="sm-icon-arrow"></i><span>线下业务办理指南</span><i class="sm-icon-arrow"></i><span class="xxyw-title">交管业务</span><i class="sm-icon-arrow"></i><span>详情</span></div>
+            <div class="menu-items"><a href="javascript:history.back();"><i class="icon-back" style="margin-bottom:0;margin-right:25px"></i></a><a href="javascript:showItem();"><i class="icon-menus" style="margin-bottom:0;margin-right:25px"></i></a>
+                <a href="../index.html"><i class="icon-home" style="margin-bottom:0"></i></a>
+            </div>
+        </header>
+        <ul class="news-wrap">
+            <li>事项性质：<span id="caseProperty"></span></li>
+            <li>办件类型：<span id="caseType"></span></li>
+            <li>法定周期：<span id="legalPromiseDays"></span>个工作日</li>
+            <li>承诺周期：<span id="promiseDays"></span>个工作日</li>
+            <li>收费信息：<span id="isPay"></span></li>
+            <li>办事指南
+                <p id="theirGuide"></p>
+            </li>
+            <li>审批（办事）依据
+                <ol id="basisList"></ol>
+            </li>
+            <li>申请材料
+                <ol id="materialList"></ol>
+            </li>
+        </ul>
+        <div class="mlist-wrap hide">
+            <ul class="mlist">
+                <li><a href="../pages/zbjd.html">周边警点一键查询</a></li>
+                <li><a href="../pages/sfzbl.html">身份证办理进度查询</a></li>
+                <li><a href="../pages/xxyw.html">线下业务办理指南</a></li>
+                <li><a href="../pages/wfcx.html">车辆违法查询</a></li>
+                <li><a href="../pages/xwdt.html">新闻动态</a></li>
+                <li><a href="../pages/crjbl.html">出入境办理进度查询</a></li>
+                <li><a href="../pages/cmcx.html">重名查询</a></li>
+                <li><a href="../pages/jszcx.html">驾驶证信息查询</a></li>
+                <li><a href="../pages/others.html">保安员考试成绩查询</a></li>
+                <li><a href="../pages/others.html">保安员证件办理进度查询</a></li>
+                <li><a href="../pages/others.html">网上事项办理进度查询</a></li>
+            </ul>
+        </div>
+        <script>
+            $(".mlist-wrap").click(function() {
+                $(".mlist-wrap").toggleClass("hide");
+            })
+
+            function showItem() {
+                $(".mlist-wrap").toggleClass("hide");
+            }
+        </script>
+    </div>
+</body>
+<script src="../js/win_size.js"></script>
+<script src="../js/getsearch.js"></script>
+<script>
+    $(function() {
+        let parm = getSearch.parseURL(location.search);
+        console.log(parm);
+        let title = parm.cnt;
+        let id = parm.id;
+        var txt, url;
+        var info = {
+            "caseGuid": "",
+        };
+        switch (title) {
+            case "traffic":
+                txt = "交管业务";
+                break;
+            case "hzyw":
+                txt = "户证业务";
+                break;
+            default:
+                // txt = " jgyw"
+                break;
+        };
+        console.log(title);
+        getDetails(title);
+        $(".xxyw-title").text(txt);
+
+        function getDetails(item) {
+            $.ajax({
+                url: urlHead2 + hz_code,
+                data: {
+                    id: id
+                },
+                type: "POST",
+                dataType: "json",
+                success: function(res) {
+                    // var res = {
+                    //     "resultData": "{\"id\":2011, \"name\":'户口簿遗失补发', \"value\":'961b058d-eb1e-459b-a3ba-9b4c9e572b63', \"children\":null}",
+                    //     "errCode": 0,
+                    //     "msg": "成功"
+                    // };
+                    if (res.errCode == "0") {
+                        let resData = JSON.parse(res.resultData);
+                        info.caseGuid = resData.value;
+                        getcnt(item, info);
+                    }
+                },
+                fail: function() {
+                    $.dialog();
+                }
+            })
+        }
+
+        function getcnt(itemcnt, guid) {
+            if (itemcnt == "hzyw") {
+                // 户证内容详情
+                $.ajax({
+                    url: urlHead1 + url_detail,
+                    data: {
+                        info: JSON.stringify(info)
+                    },
+                    type: "POST",
+                    dataType: "json",
+                    success: function(res) {
+                        if (res.errCode == "0") {
+                            // var res = {
+                            //     "resultData": "{\"basisList\":\"[]\",\"caseKindType\":\"2\",\"caseName\":\"户口簿遗失补发\",\"caseNo\":\"HZ-41132871-002911\",\"casePay\":\"[{\\\"guid\\\":\\\"ee409a66-a461-4a13-a1b5-b461bc012d8e\\\",\\\"payAmount\\\":\\\"4\\\",\\\"payAmountUnit\\\":\\\"元\\\",\\\"caseGuid\\\":\\\"961b058d-eb1e-459b-a3ba-9b4c9e572b63\\\",\\\"caseItemPay\\\":\\\"县城以下农村居民户口本\\\",\\\"payAmountBz\\\":\\\"RMB\\\"},{\\\"guid\\\":\\\"80dcae31-c34d-4845-82c7-5048edb88e01\\\",\\\"payAmount\\\":\\\"6\\\",\\\"payAmountUnit\\\":\\\"元\\\",\\\"caseGuid\\\":\\\"961b058d-eb1e-459b-a3ba-9b4c9e572b63\\\",\\\"caseItemPay\\\":\\\"城镇居民户口本\\\",\\\"payAmountBz\\\":\\\"RMB\\\"}]\",\"caseProptery\":\"2\",\"caseType\":\"2\",\"guid\":\"961b058d-eb1e-459b-a3ba-9b4c9e572b63\",\"isEms\":\"0\",\"isPay\":\"1\",\"legalPromiseDays\":\"5\",\"materialList\":\"[{\\\"guid\\\":\\\"74e5cfdd-815f-490f-b579-ff0b308e8077\\\",\\\"caseGuid\\\":\\\"961b058d-eb1e-459b-a3ba-9b4c9e572b63\\\",\\\"orderIndex\\\":\\\"0\\\",\\\"sType\\\":\\\"0\\\",\\\"isMust\\\":\\\"1\\\",\\\"material\\\":\\\"户主的《居民身份证》；\\\"},{\\\"guid\\\":\\\"41992d18-d33d-423d-a120-16e8143e1d93\\\",\\\"caseGuid\\\":\\\"961b058d-eb1e-459b-a3ba-9b4c9e572b63\\\",\\\"orderIndex\\\":\\\"0\\\",\\\"sType\\\":\\\"0\\\",\\\"isMust\\\":\\\"1\\\",\\\"material\\\":\\\"户主的书面申请；\\\"}]\",\"promiseDays\":\"5\",\"theirGuide\":\"1、派出所对申请人提供的材料进行核实，材料齐全的立即核准。2、经核准办理的，户主须持申报材料原件及复印件，在60日内到户籍所在地派出所户籍窗口办理。逾期未办理的应当重新提交申请。3、城镇居民6元/本.户，县城以下农村居民4元/本.户。收费依据：《关于新制式居民户口簿工本费标准的批复》（豫财预外字[1996]第33号豫价费字[1996]第011号）\"}",
+                            //     "errCode": "0",
+                            //     "msg": "成功"
+                            // };
+                            let resData = JSON.parse(res.resultData);
+                            let caseType, caseProptery;
+                            let materialList = "";
+                            let basisList = "";
+                            let legalPromiseDays = resData.legalPromiseDays;
+                            let promiseDays = resData.promiseDays;
+                            let theirGuide = resData.theirGuide;
+                            let isPay = resData.isPay == "0" ? "否" : "是";
+                            switch (resData.caseType) {
+                                case "1":
+                                    caseType = "即办件";
+                                    break;
+                                case "2":
+                                    caseType = "承诺件";
+                                    break;
+                                case "3":
+                                    caseType = "预约件";
+                                    break;
+                                default:
+                                    break;
+                            };
+                            switch (resData.caseProptery) {
+                                case "1":
+                                    caseProptery = "公示";
+                                    break;
+                                case "2":
+                                    caseProptery = "申报";
+                                    break;
+                                case "3":
+                                    caseProptery = "预约";
+                                    break;
+                                default:
+                                    break;
+                            };
+                            var _basis = JSON.parse(resData.basisList);
+                            var _material = JSON.parse(resData.materialList);
+                            console.log(_basis);
+                            console.log(_material);
+                            for (let i = 0, len = _basis.length; i < len; i++) {
+                                basisList += `<li>${_basis[i].basisContent}</li>`
+                            };
+                            for (let i = 0, len = _material.length; i < len; i++) {
+                                materialList += `<li>${_material[i].material}</li>`;
+                            };
+                            console.log(basisList);
+                            console.log(materialList);
+                            $("#isPay").text(isPay);
+                            $("#legalPromiseDays").text(legalPromiseDays);
+                            $("#promiseDays").text(promiseDays);
+                            $("#theirGuide").text(theirGuide);
+                            $("#caseType").text(caseType);
+                            $("#caseProperty").text(caseProptery);
+                            $("#basisList").html(basisList);
+                            $("#materialList").html(materialList);
+                            // $("")
+                        } else {
+                            $.dialog({
+                                "txt": res.msg
+                            });
+                        }
+                    },
+                    fail: function() {
+                        $.dialog();
+                    }
+                })
+            }
+        }
+    })
+</script>
+
+</html>

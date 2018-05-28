@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/dialog.css">
+    <title>车辆违法查询</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="../js/dialog.js"></script>
+    <script src="../js/globaldata.js"></script>
+    <style>
+        .wrap {
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        
+        .form-wrap form .input-wrap:first-child {
+            margin-top: 0;
+        }
+        
+        .select {
+            width: 160px;
+            margin-right: 25px;
+        }
+        
+        .input {
+            flex: 1;
+        }
+        
+        .radio {
+            color: #4d4d4d;
+            width: 160px;
+            display: flex;
+            flex-flow: row nowrap;
+            align-items: center;
+            justify-content: space-around;
+        }
+        
+        .input-wrap .radio:nth-child(2) {
+            margin-right: 25px;
+        }
+        
+        .radio.on {
+            box-shadow: 0 0 5px 5px #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <div class="menu-name"><span>大厅</span><i class="sm-icon-arrow"></i><span>车辆违法查询大厅</span></div>
+            <div class="menu-items"><a href="javascript:showItem();"><i class="icon-menus" style="margin-bottom:0;margin-right:25px;z-index:9999"></i></a><a href="../index.html"><i class="icon-home" style="margin-bottom:0"></i></a></div>
+        </header>
+        <div class="mlist-wrap hide">
+            <ul class="mlist">
+                <li><a href="../pages/zbjd.html">周边警点一键查询</a></li>
+                <li><a href="../pages/sfzbl.html">身份证办理进度查询</a></li>
+                <li><a href="../pages/xxyw.html">线下业务办理指南</a></li>
+                <li><a href="../pages/wfcx.html">车辆违法查询</a></li>
+                <li><a href="../pages/xwdt.html">新闻动态</a></li>
+                <li><a href="../pages/crjbl.html">出入境办理进度查询</a></li>
+                <li><a href="../pages/cmcx.html">重名查询</a></li>
+                <li><a href="../pages/jszcx.html">驾驶证信息查询</a></li>
+                <li><a href="../pages/others.html">保安员考试成绩查询</a></li>
+                <li><a href="../pages/others.html">保安员证件办理进度查询</a></li>
+                <li><a href="../pages/others.html">网上事项办理进度查询</a></li>
+            </ul>
+        </div>
+        <script>
+            $(".mlist-wrap").click(function() {
+                $(".mlist-wrap").toggleClass("hide");
+            })
+
+            function showItem() {
+                $(".mlist-wrap").toggleClass("hide");
+            }
+        </script>
+        <div class="form-wrap">
+            <form>
+                <div class="input-wrap">
+                    <input type="radio" class="hide" name="automobile" value="02" id="car" checked>
+                    <label for="car" class="radio on"><i class="icon-car"></i>小车</label>
+                    <input type="radio" class="hide" name="automobile" value="01" id="truck">
+                    <label for="truck" class="radio"><i class="icon-truck"></i>大车</label>
+                </div>
+                <script>
+                    $("input:radio[name='automobile']").change(function() {
+                        $(".radio").removeClass("on");
+                        $(this).next(".radio").addClass("on");
+                        console.log($(this).val());
+                    })
+                </script>
+                <div class="input-wrap">
+                    <select name="fzjg" class="select" style="border: none" id="fzjg">
+                        <option selected value="豫A">豫A</option>
+                        <option value="豫B">豫B</option>
+                        <option value="豫C">豫C</option>
+                        <option value="豫D">豫D</option>
+                        <option value="豫E">豫E</option>
+                        <option value="豫F">豫F</option>
+                        <option value="豫G">豫G</option>
+                        <option value="豫H">豫H</option>
+                        <option value="豫J">豫J</option>
+                        <option value="豫K">豫K</option>
+                        <option value="豫L">豫L</option>
+                        <option value="豫M">豫M</option>
+                        <option value="豫N">豫N</option>
+                        <option value="豫P">豫P</option>
+                        <option value="豫Q">豫Q</option>
+                        <option value="豫R">豫R</option>
+                        <option value="豫S">豫S</option>
+                        <option value="豫U">豫U</option>
+                    </select>
+                    <input type="text" placeholder="请输入车牌号" class="input" name="carNum">
+                </div>
+                <div class="input-wrap">
+                    <input type="text" placeholder="请输入车辆识别代码（后六位）" class="input" name="carCode">
+                </div>
+                <div class="input-wrap">
+                    <a href="javascript:check();" class="btn-lg"><span>查</span>询</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script src="../js/win_size.js"></script>
+<script>
+    function check() {
+        console.log($("input[name='automobile']").val());
+        let type = $("input[name='automobile']:checked").val();
+        let carNum = $("input[name='carNum']").val().replace(/\s+/g, "");
+        let carCode = $("input[name='carCode']").val().replace(/\s+/g, "");
+        let FZJG = $("#fzjg").val();
+        var info = {
+            "HPZL": type, //号牌种类
+            "HPHM": carNum, //号牌号码
+            "FZJG": FZJG, //发证机关
+            "CLSBDH": carCode, //车辆识别代码
+            "FDJH": "", //发动机号
+            "pageNo": "1"
+        };
+        if (carNum.length != 5 || carCode.length != 6) {
+            $.dialog({
+                "txt": "请正确输入车牌号或车辆识别代码！"
+            });
+        } else {
+            var authjson = JSON.stringify(auth_WZ);
+            var infojson = JSON.stringify(info);
+            var data = "auth=" + authjson + "&info=" + infojson;
+            $.ajax({
+                url: urlHead + WZXX,
+                data: data,
+                type: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                dataType: "json",
+                success: function(res) {
+                    // success
+                    console.log(res);
+                    let err = res.errCode;
+                    switch (err) {
+                        case "1":
+                            $.dialog({
+                                "txt": res.msg
+                            });
+                            break;
+                        case "0":
+                            storage.setItem("wzxx", JSON.stringify(res));
+                            window.location.assign("result.html?wf=" + "wz");
+                        default:
+                            $.dialog({
+                                "txt": res.msg
+                            });
+                            break;
+                    }
+                },
+                fail: function() {
+                    // fail
+                    $.dialog();
+                },
+            })
+        }
+        console.log(info);
+    }
+</script>
+
+</html>

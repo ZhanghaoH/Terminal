@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/index.css">
+    <title>终端机展示</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="./js/jquery.SuperSlide.2.1.1.js"></script>
+    <script src="./js/globaldata.js"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.3&key=e31e1eb03a47963714cbad012ae86c9e"></script>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="cnt-left">
+            <ul class="opt-list">
+                <li>
+                    <a href="pages/xxyw.html" class="col2"><i class="icon-xxyw"></i>线下业务办理指南</a>
+                    <a href="pages/wfcx.html" class="col"><i class="icon-wfcx"></i>车辆<br>违法查询</a>
+                </li>
+                <li>
+                    <a href="pages/zbjd.html" class="col"><i class="icon-zbjd"></i>周边警点<br>一键查询</a>
+                    <a href="pages/sfzbl.html" class="col2"><i class="icon-sfzbl"></i>身份证办理进度查询</a>
+                </li>
+                <li>
+                    <a href="pages/xwdt.html" class="col"><i class="icon-xwdt"></i>新闻动态</a>
+                    <a href="pages/crjbl.html" class="col2"><i class="icon-crjbl"></i>出入境证件办理进度查询</a>
+                </li>
+                <li>
+                    <a href="pages/cmcx.html" class="col"><i class="icon-cmcx"></i>重名查询</a>
+                    <div class="col2" style="background:none;flex-direction:row">
+                        <a href="pages/jszcx.html" class="col"><i class="icon-jszcx"></i>驾驶证<br>信息查询</a>
+                        <a href="pages/others.html" class="col"><i class="icon-others"></i>其他查询</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="cnt-right">
+            <!--轮播图-->
+            <div class="picFocus">
+                <div class="bd">
+                    <ul>
+                        <li>
+                            <a href="###"><img src="images/pic1.jpg" /></a>
+                        </li>
+                        <li>
+                            <a href="###"><img src="images/pic2.jpg" /></a>
+                        </li>
+                        <li>
+                            <a href="###"><img src="images/pic3.jpg" /></a>
+                        </li>
+                        <li>
+                            <a href="###"><img src="images/pic4.jpg" /></a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="hd">
+                    <ul>
+                        <li><img src="images/pic1.jpg" /></li>
+                        <li><img src="images/pic2.jpg" /></li>
+                        <li><img src="images/pic3.jpg" /></li>
+                        <li><img src="images/pic4.jpg" /></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!--轮播图结束-->
+            <div class="info-list">
+                <ul style="height:100%;display:flex">
+                    <li>
+                        <div class="title">中原路派出所<i class="sm-icon-tel" style="margin-left:15px"></i></div>
+                        <div class="txt">地址：河南省郑州市中原区</div>
+                        <div class="txt">社区民警：志强&emsp;&emsp;电话：18637188643</div>
+                    </li>
+                    <li>
+                        <div class="title">中原路派出所<i class="sm-icon-tel" style="margin-left:15px"></i></div>
+                        <div class="txt">地址：河南省郑州市中原区</div>
+                        <div class="txt">社区民警：志强&emsp;&emsp;电话：18637188643</div>
+                    </li>
+                </ul>
+                <a href="pages/zbjd.html" class="btn-sm posi-rb" id="details">查看详情</a>
+            </div>
+        </div>
+        <div id="container" class="hide"></div>
+    </div>
+    <script src="js/win_size.js"></script>
+    <script type="text/javascript">
+        fetch('http://app1.henanga.gov.cn/jmt/app/mediaNews_sendNews?info={"city":"郑州"}', {
+            method: 'GET',
+        }).then(res => res.json()).then(data => {
+            // let data = {
+            //     "errCode": 0,
+            //     "msg": "成功",
+            //     "resultData": [{
+            //         "city": "河南省公安厅",
+            //         "contentString": "",
+            //         "context": "<p style=\"text-align:center\"><span style=\"font-size:20px\"><strong>河南重点打击四类经济犯罪 </strong></span></p>\r\n\r\n<p style=\"text-align:center\"><span style=\"font-size:20px\"><strong>受到公安部12次通令嘉奖和表扬 &nbsp;</strong>&nbsp;</span></p>\r\n\r\n<p>&nbsp; &nbsp; 新华社郑州５月１1日电（记者李丽静）</p>\r\n\r\n<p>&nbsp; &nbsp; 记者从河南省公安厅获悉，该省重点打击涉众型经济犯罪、民生型经济犯罪、税务欺诈类经济犯罪和境外在逃类经济犯罪。去年以来，共立各类经济犯罪案件７６７３起，抓获犯罪嫌疑人６６６４人，其中境外缉捕逃犯３９名。<br />\r\n　 河南省公安厅经侦总队政委王延青介绍说，去年以来，河南省公安机关以打击非法集资犯罪为主线，开展了打击侵犯知识产权和假冒伪劣商品犯罪、打击虚开增值税发票和骗取出口退税犯罪、打击假币、假银行卡犯罪等专项行动，深入推进&ldquo;猎狐&rdquo;专项行动，取得显著成效。<br />\r\n　 ２０１６年７月至１２月，河南省公安厅针对重点地区，组织郑州、洛阳、开封１０个省辖市和永城、长垣等省直管市（县）的公安机关对涉烟经济犯罪开展两次专项打击，破获苏某某等人制售假烟案、刘某等人非法经营假烟案等３２起涉烟案件，缴获假冒各类品牌假烟２６００余万支，烟叶、烟丝等制假原材料６万余公斤，包装材料７万余件（套），涉案价值１.５亿余元。<br />\r\n　 &ldquo;河南公安机关利用引渡、非法移民遣返、境外追诉、劝返等追逃手段，全力缉捕在逃人员。&rdquo;王延青称，目前，已经从美国、加拿大、马达加斯加、印度尼西亚、波兰、缅甸、澳大利亚等２０个国家和地区缉捕逃犯３９名。<br />\r\n　 据悉，今年河南省公安机关将继续组织打击非法集资犯罪攻坚战，控制增量、消化存量，努力为群众挽回一批损失。同时，组织开展&ldquo;２０１７云端行动&rdquo;等，打击洗钱、地下钱庄、银行间债券、内幕交易、操纵市场、网络传销等犯罪。</p>\r\n",
+            //         "id": 2059,
+            //         "title": "河南重点打击四类经济犯罪   受到公安部12次通令嘉奖和表扬",
+            //         "uploadtime": "2017-05-12 15:42:52",
+            //         "url": "http://app1.henanga.gov.cn/jmt/upldate/news/972643f8bdda40f9904310d1233c24a8_1494574969414.jpg"
+            //     }, {
+            //         "city": "河南省公安厅",
+            //         "contentString": "",
+            //         "context": "<h2>全国特级优秀人民警察候选对象公示 河南9名民警入选</h2>\r\n\r\n<p>&nbsp; &nbsp; 4月16日、17日，公安部宣传局先后对全国优秀公安局优秀公安基层单位候选对象和全国特级优秀人民警察候选对象进行奖励公示，河南4个基层单位、9名民警入选。</p>\r\n\r\n<p>&nbsp; &nbsp; 此次全国优秀公安局优秀公安基层单位候选对象奖励公示公告中，我省洛阳市公安局长春路分局、新野县公安局、三门峡市公安局湖滨分局、确山县公安局4个基层单位入选。</p>\r\n\r\n<p>&nbsp; &nbsp; 据了解，此次全国特级优秀人民警察全国范围内共评选表彰名额220名，评选范围为全国公安机关在编在职的人民警察，重点评选2012年1月1日以来，在各项公安保卫工作特别是维护国家安全和社会稳定、严格规范公正文明执法、为人民群众服务方面取得突出成绩的基层一线民警。我省公安消防总队驻马店市支队驿城区大队风光路中队政治指导员董英俊，郑州市公安局商城路派出所案件侦办大队教导员刘成晓，新乡市公安局胜利派出所案件侦查大队三中队中队长李新民，南阳市公安局网络安全和技术侦查支队支队长李保山 ，焦作市公安局犯罪侦查支队技术处法医大队副大队长闪春霞，平顶山市公安局犯罪侦查支队副支队长赵国明，临颍县公安局皇帝庙派出所指导员陈晓磐，新蔡县公安局交通警察大队民警王树鹏，台前县公安局禁毒大队副大队长乔进全等9人入选。</p>\r\n",
+            //         "id": 2022,
+            //         "title": "全国特级优秀人民警察候选对象公示 河南9名民警入选",
+            //         "uploadtime": "2017-04-19 17:18:33",
+            //         "url": "http://app1.henanga.gov.cn/jmt/upldate/news/04aebe0beffa4d17863fedeba0f65199_1492593513632.jpg"
+            //     }, {
+            //         "city": "郑州市公安局",
+            //         "contentString": "",
+            //         "context": "<p>炎炎夏日，热浪扑面，是盗窃案件多发期。针对辖区治安状况，东方路分局交管巡防大队大队长曲立军要求各巡逻组加强对辖区内案件高发路段的巡逻，并加强对夜间可疑人员的盘查，为辖区百姓创造一个安宁的社区贡献力量。</p>\r\n\r\n<p>2017年6月25日凌晨4时许，交管巡防大队民警宋立安带领辅警王丛山巡逻至北环路普庆路口时，见一年轻男子沿北环路由西向东行走并不时朝路边车内张望，随即上前对该男子进行盘查。经询问了解，该男子叫李某，商丘市睢阳区人，从其包内发现一把不锈钢的弹弓和钢珠若干，出于职业敏感，结合近期警情实际，民警推测该男子可能是砸车玻璃盗窃的嫌疑人员，该男子却谎称是从小市场买来玩的。</p>\r\n\r\n<p>为了验证自己的判断，民警遂对附近停放车辆挨个检查，通过调出附近的平安金水视频监控，画面显示：北环路与索凌路口向东100米处路南停放的一辆白色宝骏汽车右后玻璃被人为砸碎，而该男子正是画面中的嫌疑人。见无法蒙混过去，该男子就对自己砸了该车玻璃盗窃的事实供认不讳。</p>\r\n\r\n<p>随后，民警根据车上留的电话与车主联系，但电话一直无人接听，就给车主发了短信，等候在现场。早上七点，车主收到短信联系了民警，双方沟通后决定将嫌疑人移交给姜寨警务区作下一步处理。</p>\r\n",
+            //         "id": 2261,
+            //         "title": "盗窃还撒谎 看你往哪逃",
+            //         "uploadtime": "2017-07-03 09:12:07",
+            //         "url": "http://app1.henanga.gov.cn/jmt/upldate/news/4bd16b8cf1e541bba6e0fe1650fdeee1_1499044326977.jpg"
+            //     }, {
+            //         "city": "郑州市公安局",
+            //         "contentString": "",
+            //         "context": "<p>打击&ldquo;盗抢骗&rdquo;及&ldquo;涉车&rdquo;专项行动开展以来，郑州市公安局郑东分局各部门紧紧围绕党委中心工作部署，不断调整工作思路，加强机制建设，近日，通过开展视频深度应用及人像卡口、深度分析工作，成功打掉一个集盗、销为一体的盗窃电动车团伙，抓获犯罪嫌疑人5名，追回涉案电动车8辆。</p>\r\n\r\n<p>2017年6月2日零时许，王某向郑东分局指挥室求助，称其存放在崔庄安置小区的一辆电动三轮车丢失。</p>\r\n\r\n<p>接报后，分局视频监控中心视频监看队员立即回调视频监控录像，提取到作案现场的相关视频。随后，通过对崔庄社区出入口的监控设备进行比对查询，民警发现了2名嫌疑人进入小区时清晰的面部照片。</p>\r\n\r\n<p>为了进一步确定嫌疑人的身份。视频队员反复浏览嫌疑人进入现场的视频，以确定更多的线索。其中，视频中有一秒钟车辆调头的画面，大家没有放弃这一线索，立即对该车进行放大处理。经综合周边的视频监控，遂确定嫌疑人正是乘坐该车而来。</p>\r\n\r\n<p>凌晨三时许，民警一边与出租车客运管理处联系，一边调取相应的社会监控。经与出租车司机的沟通，并未发现案件相关线索。</p>\r\n\r\n<p>6月4日，视频监看队员通过36小时的不懈努力，最终确定了嫌疑人出入小区的视频轨迹和其租住的房屋及身份。</p>\r\n\r\n<p>经综合分析，民警发现该团伙手法娴熟、昼伏夜出，又有多次前科劣迹。视频监控中心遂线上、线下进行加网布控，连续八昼夜跟踪研判，进一步掌握了该团伙的作案规律、销赃窝点和出行路线。</p>\r\n\r\n<p>6月12日1时10分，民警发现犯罪嫌疑人苟某再次搭乘出租车至杜岭街附近接着另一名嫌疑人陈某后直接奔赴郑东新区八里庙安置小区，分局民警立即兵分两路对嫌疑人进行线上、线下全程跟踪：一路由视频监控中心负责人徐新强带队，对嫌疑人的作案过程进行跟踪；一路由通泰路派出所教导员周屹带队，派出所民警及交管巡防大队相关民警进行配合，在北二七路张寨南街的销赃点布控。</p>\r\n\r\n<p>凌晨4时许，陈某等2名嫌疑人驾驶盗窃得来的一辆电动三轮车和一辆大力神电动车赶到销赃点时，现场民警立即对其合围抓捕，一举将涉嫌盗窃的苟某、陈某及收赃的方某等五人成功抓获，现场提取被盗电动车8辆及液压钳、万能钥匙、电动车点火开关等大量作案工具。</p>\r\n\r\n<p>经查，该团伙嫌疑人曾因盗窃电动车被公安机关多次打击处理。6月12日凌晨2时许，嫌疑人苟某、陈某在八里庙南五、南二小区分别用液压钳和万能钥匙为工具盗窃两辆电动车，两人对其盗窃事实供认不讳。</p>\r\n\r\n<p>目前，该案正在进一步审理中。</p>\r\n",
+            //         "id": 2226,
+            //         "title": "视频监控显“身手” 民警抽丝剥茧擒获老贼",
+            //         "uploadtime": "2017-06-28 10:50:00",
+            //         "url": "http://app1.henanga.gov.cn/jmt/upldate/news/9e4fe8f91b2a4cf8801bbbc0a85c6d1f_1498618200030.jpg"
+            //     }]
+            // };
+            console.log(data);
+            if (data.errCode == "0") {
+                $(".bd ul").html("");
+                let res = data.resultData; //含四组新闻的数组
+                let li_html = "";
+                storage.setItem("news", JSON.stringify(res));
+                for (let i = 0, len = res.length; i < len; ++i) {
+                    li_html += '<li><a href = "pages/in_details.html?index=' + i + '"><img src = "' + res[i].url + '" /></a></li>';
+                    $(".hd ul li").eq(i).children("img").prop("src", res[i].url);
+                };
+                $(".bd ul").append(li_html);
+                $(".hd img").css("width", $(".hd").width * 9 / 16);
+                $(".bd img").css("width", $(".bd").width * 9 / 16);
+                jQuery(".picFocus").slide({
+                    mainCell: ".bd ul",
+                    effect: "left",
+                    autoPlay: true
+                });
+            }
+        }).catch(err => {
+            console.error(err);
+            // alert("获取新闻数据出错！");
+        });
+        jQuery(".picFocus").slide({
+            mainCell: ".bd ul",
+            effect: "left",
+            autoPlay: true
+        });
+        // fetch('http://restapi.amap.com/v3/place/around?key=b13b4ed1af13b34d7cccd2fdd3172cc4&location=116.456299,39.960767&keywords=派出所&radius=5000')
+    </script>
+    <script>
+        $(function() {
+            // console.log($(".hd").height());
+            // console.log($(".bd").height());
+            // $(".hd img").height($(".hd").height());
+            // $(".bd img").height($(".bd").height());
+            var mapObj = new AMap.Map('container');
+            var pos = [];
+            mapObj.plugin('AMap.Geolocation', function() {
+                geolocation = new AMap.Geolocation({
+                    enableHighAccuracy: true, //是否使用高精度定位，默认:true
+                    timeout: 10000, //超过10秒后停止定位，默认：无穷大
+                    maximumAge: 0, //定位结果缓存0毫秒，默认：0
+                    convert: true, //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+                    showButton: true, //显示定位按钮，默认：true
+                    buttonPosition: 'LB', //定位按钮停靠位置，默认：'LB'，左下角
+                    buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                    showMarker: true, //定位成功后在定位到的位置显示点标记，默认：true
+                    showCircle: true, //定位成功后用圆圈表示定位精度范围，默认：true
+                    panToLocation: true, //定位成功后将定位到的位置作为地图中心点，默认：true
+                    zoomToAccuracy: true //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+                });
+                mapObj.addControl(geolocation);
+                geolocation.getCurrentPosition();
+                AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息
+                AMap.event.addListener(geolocation, 'error', onError); //返回定位出错信息
+            });
+            //解析定位结果
+            function onComplete(data) {
+                console.log([data.position.getLng(), data.position.getLat()]);
+                pos.push(data.position.getLng());
+                pos.push(data.position.getLat());
+                neighbor("派出所", pos, 3000, mapObj);
+            }
+            //解析定位错误信息
+            function onError(data) {
+                $.dialog({
+                    "txt": "定位失败"
+                });
+            }
+            // 调用searchNearBy方法
+            // 设定好相关的参数值后，调用searchNearBy方法进行查询，将''作为参数1，参数2为中心点坐标，参数3为半径，单位米，参数4为回调函数。
+            function neighbor(key, pos, radius, amap) {
+                AMap.service(["AMap.PlaceSearch"], function() {
+                    var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+                        pageSize: 6,
+                        type: '政府机构及社会团体',
+                        pageIndex: 1,
+                        // city: "010", //城市
+                        map: amap,
+                        panel: "panel"
+                    });
+
+                    placeSearch.searchNearBy(key, pos, radius, function(status, result) {
+                        console.log(result);
+                    });
+                });
+            }
+        })
+    </script>
+</body>
+
+</html>

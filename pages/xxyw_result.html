@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/dialog.css">
+    <title>详情界面</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="../js/dialog.js"></script>
+    <script src="../js/globaldata.js"></script>
+    <style>
+        .wrap {
+            position: relative;
+            padding-top: 80px;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .news-wrap {
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+        }
+        
+        .news-wrap li {
+            padding: 5px 0;
+        }
+        
+        ol {
+            list-style-type: none;
+            counter-reset: sectioncounter;
+        }
+        
+        ol li:before {
+            content: counter(sectioncounter) ".";
+            counter-increment: sectioncounter;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <div class="menu-name" style="width:auto"><span>大厅</span><i class="sm-icon-arrow"></i><span>线下业务办理指南</span><i class="sm-icon-arrow"></i><span class="xxyw-title">线下业务办理指南</span><i class="sm-icon-arrow"></i><span>详情</span></div>
+            <div class="menu-items"><a href="javascript:history.back();"><i class="icon-back" style="margin-bottom:0;margin-right:25px"></i></a><a href="javascript:showItem();"><i class="icon-menus" style="margin-bottom:0;margin-right:25px"></i></a>
+                <a href="../index.html"><i class="icon-home" style="margin-bottom:0"></i></a>
+            </div>
+        </header>
+        <ul class="news-wrap">
+            <li>事项性质：<span id="caseProperty"></span></li>
+            <li>办件类型：<span id="caseType"></span></li>
+            <li>法定周期：<span id="legalPromiseDays"></span>个工作日</li>
+            <li>承诺周期：<span id="promiseDays"></span>个工作日</li>
+            <li>收费信息：<span id="isPay"></span></li>
+            <li>办事指南
+                <p id="theirGuide"></p>
+            </li>
+            <li>审批（办事）依据
+                <ol id="basisList"></ol>
+            </li>
+            <li>申请材料
+                <ol id="materialList"></ol>
+            </li>
+        </ul>
+        <div class="mlist-wrap hide">
+            <ul class="mlist">
+                <li><a href="../pages/zbjd.html">周边警点一键查询</a></li>
+                <li><a href="../pages/sfzbl.html">身份证办理进度查询</a></li>
+                <li><a href="../pages/xxyw.html">线下业务办理指南</a></li>
+                <li><a href="../pages/wfcx.html">车辆违法查询</a></li>
+                <li><a href="../pages/xwdt.html">新闻动态</a></li>
+                <li><a href="../pages/crjbl.html">出入境办理进度查询</a></li>
+                <li><a href="../pages/cmcx.html">重名查询</a></li>
+                <li><a href="../pages/jszcx.html">驾驶证信息查询</a></li>
+                <li><a href="../pages/others.html">保安员考试成绩查询</a></li>
+                <li><a href="../pages/others.html">保安员证件办理进度查询</a></li>
+                <li><a href="../pages/others.html">网上事项办理进度查询</a></li>
+            </ul>
+        </div>
+        <script>
+            $(".mlist-wrap").click(function() {
+                $(".mlist-wrap").toggleClass("hide");
+            })
+
+            function showItem() {
+                $(".mlist-wrap").toggleClass("hide");
+            }
+        </script>
+    </div>
+</body>
+<script src="../js/win_size.js"></script>
+<script src="../js/getsearch.js"></script>
+<script>
+    $(function() {
+        let parm = getSearch.parseURL(location.search);
+        console.log(parm);
+        let title = parm.cnt;
+        let guid = parm.guid;
+        console.log(title);
+        var txt, url;
+        var info = {
+            "caseGuid": guid,
+        };
+        switch (title) {
+            // case "traffic":
+            //     txt = "交管业务";
+            //     break;
+            case "crjyw":
+                txt = "出入境业务";
+
+                break;
+                // case "hzyw":
+                //     txt = "户证业务";
+                //     break;
+            case "zayw":
+                txt = "治安业务";
+                break;
+            case "xfyw":
+                txt = "消防业务";
+                break;
+            case "kgyw":
+                txt = "监管业务";
+                break;
+            case "wayw":
+                txt = "网安业务";
+                break;
+            default:
+                // txt = " jgyw"
+                break;
+        };
+        $(".xxyw-title").text(txt);
+        $.ajax({
+            url: urlHead1 + url_detail,
+            data: {
+                info: JSON.stringify(info)
+            },
+            type: "POST",
+            dataType: "json",
+            success: function(res) {
+                if (res.errCode == "0") {
+                    // var res = {
+                    //     "resultData": "{\"basisList\":\"[{\\\"guid\\\":\\\"22bc1970-36dc-45e8-9624-2812ff9bcb68\\\",\\\"basisName\\\":\\\"《民用爆炸物品安全管理条例》\\\",\\\"caseGuid\\\":\\\"2458a8dc-99fd-4ba4-9ac5-44f41803793a\\\",\\\"basisContent\\\":\\\"《民用爆炸物品安全管理条例》\\\"}]\",\"caseKindType\":\"1\",\"caseName\":\"非营业性爆破作业单位许可\",\"caseNo\":\"ZA-41050003-0012100\",\"caseProptery\":\"2\",\"caseType\":\"2\",\"guid\":\"2458a8dc-99fd-4ba4-9ac5-44f41803793a\",\"isEms\":\"0\",\"isPay\":\"0\",\"legalPromiseDays\":\"20\",\"materialList\":\"[{\\\"guid\\\":\\\"b7de4775-9d0b-4591-ae7a-4671d64656ff\\\",\\\"caseGuid\\\":\\\"2458a8dc-99fd-4ba4-9ac5-44f41803793a\\\",\\\"isMust\\\":\\\"0\\\",\\\"material\\\":\\\"《爆破作业单位许可证》（非营业性）申请表\\\"},{\\\"guid\\\":\\\"e55c62dc-40af-4cc8-8b8a-37c953551e2d\\\",\\\"caseGuid\\\":\\\"2458a8dc-99fd-4ba4-9ac5-44f41803793a\\\",\\\"orderIndex\\\":\\\"386\\\",\\\"sType\\\":\\\"0\\\",\\\"isMust\\\":\\\"0\\\",\\\"material\\\":\\\"单位建立安全生产管理机构、确定专职安全生产管理人员名单的相关文件，制定的安全管理制度、岗位安全责任制\\\"},{\\\"guid\\\":\\\"292a6579-4c06-4129-86e0-7ad93f29a4e6\\\",\\\"caseGuid\\\":\\\"2458a8dc-99fd-4ba4-9ac5-44f41803793a\\\",\\\"orderIndex\\\":\\\"385\\\",\\\"sType\\\":\\\"0\\\",\\\"isMust\\\":\\\"0\\\",\\\"material\\\":\\\"钻孔机、空压机、测振仪、全站仪等与爆破作业类别相配套的爆破施工机械及检测、测量设备清单，以及证明其所\\\"},{\\\"guid\\\":\\\"b6ae07a5-d8c8-406c-9c84-981019687cf9\\\",\\\"caseGuid\\\":\\\"2458a8dc-99fd-4ba4-9ac5-44f41803793a\\\",\\\"orderIndex\\\":\\\"384\\\",\\\"sType\\\":\\\"0\\\",\\\"isMust\\\":\\\"0\\\",\\\"material\\\":\\\"爆破工程技术人员不少于1人、爆破员不少于5人、安全员不少于2人、保管员不少于2人。并提交以上爆破作\\\"},{\\\"guid\\\":\\\"a0f74345-70fe-436a-b6b2-5b637ba6d6a9\\\",\\\"caseGuid\\\":\\\"2458a8dc-99fd-4ba4-9ac5-44f41803793a\\\",\\\"orderIndex\\\":\\\"383\\\",\\\"sType\\\":\\\"0\\\",\\\"isMust\\\":\\\"0\\\",\\\"material\\\":\\\"单位法定代表人的简历和身份证复印件。技术负责人的单位任命文件、理学或工学学士以上毕业证书、中级以上技\\\"},{\\\"guid\\\":\\\"f8eb59b7-19fe-47cf-85eb-07ad4ef2f71b\\\",\\\"caseGuid\\\":\\\"2458a8dc-99fd-4ba4-9ac5-44f41803793a\\\",\\\"orderIndex\\\":\\\"382\\\",\\\"sType\\\":\\\"0\\\",\\\"isMust\\\":\\\"0\\\",\\\"material\\\":\\\"民用爆炸物品专用仓库所有权人的凭证和有民用爆炸物品储存安全评价资格的安全评价机构出具的安全评价报告。\\\"},{\\\"guid\\\":\\\"34e885d9-67a9-47e2-b896-ddcc62df0d21\\\",\\\"caseGuid\\\":\\\"2458a8dc-99fd-4ba4-9ac5-44f41803793a\\\",\\\"orderIndex\\\":\\\"381\\\",\\\"sType\\\":\\\"0\\\",\\\"isMust\\\":\\\"0\\\",\\\"material\\\":\\\"采矿许可证、安全生产许可证、煤炭生产许可证、工商营业执照的复印件，或其他证明爆破作业属于合法生产活动\\\"},{\\\"guid\\\":\\\"aae5c4e8-f5db-4224-9248-d36efeb07a48\\\",\\\"caseGuid\\\":\\\"2458a8dc-99fd-4ba4-9ac5-44f41803793a\\\",\\\"orderIndex\\\":\\\"365\\\",\\\"sType\\\":\\\"0\\\",\\\"isMust\\\":\\\"0\\\",\\\"material\\\":\\\"其它相关材料\\\"}]\",\"promiseDays\":\"20\",\"theirGuide\":\"申请从事爆破作业的单位，应当具备下列条件：1、爆破作业属于合法的生产活动；2、有符合国家有关标准和规范的民用爆炸物品专用仓库；3、有具备相应资格的安全管理人员、仓库管理人员和具备国家规定执业资格的爆破作业人员；4、有健全的安全管理制度、岗位安全责任制度；5、有符合国家标准、行业标准的爆破作业专用设备；7、法律、行政法规规定的其他条件。所需材料：（一）《爆破作业单位许可证》（非营业性）申请表（附件2）；（二）采矿许可证、安全生产许可证、煤炭生产许可证、工商营业执照的复印件，或其他证明爆破作业属于合法生产活动、证明爆破作业区域的相关材料；（三）民用爆炸物品专用仓库所有权人的凭证和有民用爆炸物品储存安全评价资格的安全评价机构出具的安全评价报告。该储存库必须是本单位专有专用，不得租用，不得与其他单位合用；（四）单位法定代表人的简历和身份证复印件。技术负责人的单位任命文件、理学或工学学士以上毕业证书、中级以上技术职称证书、爆破工程技术人员安全作业证的复印件，以及从事2年以上爆破作业项目技术管理工作简历和证明材料；（五）具备爆破工程技术人员不少于1人、爆破员不少于5人、安全员不少于2人、保管员不少于2人。并提交以上爆破作业人员安全作业证复印件，作业证上载明的单位须与申请单位一致；申请单位与上述人员订立的书面劳动合同复印件，以及向劳动保障部门缴纳基本养老保险、基本医疗保险、工伤保险、失业保险、生育保险等社会保险的证明材料；（六）单位法人代表、技术负责人、爆破作业人员的无违法违纪证明材料；（七）钻孔机、空压机、测振仪、全站仪等与爆破作业类别相配套的爆破施工机械及检测、测量设备清单，以及证明其所有权的相关票据复印件；（八）单位建立安全生产管理机构、确定专职安全生产管理人员名单的相关文件，制定的安全管理制度、岗位安全责任制度、安全生产事故应急处置预案。技术负责人与项目技术负责人可以合二为一。不收费。办理流程：预约-办理。\"}",
+                    //     "errCode": "0",
+                    //     "msg": "成功"
+                    // }
+                    let resData = JSON.parse(res.resultData);
+                    let caseType, caseProptery;
+                    var materialList = "";
+                    var basisList = "";
+                    let legalPromiseDays = resData.legalPromiseDays;
+                    let promiseDays = resData.promiseDays;
+                    let theirGuide = resData.theirGuide;
+                    let isPay = resData.isPay == "0" ? "否" : "是";
+                    switch (resData.caseType) {
+                        case "1":
+                            caseType = "即办件";
+                            break;
+                        case "2":
+                            caseType = "承诺件";
+                            break;
+                        case "3":
+                            caseType = "预约件";
+                            break;
+                        default:
+                            break;
+                    };
+                    switch (resData.caseProptery) {
+                        case "1":
+                            caseProptery = "公示";
+                            break;
+                        case "2":
+                            caseProptery = "申报";
+                            break;
+                        case "3":
+                            caseProptery = "预约";
+                            break;
+                        default:
+                            break;
+                    };
+                    var _basis = JSON.parse(resData.basisList);
+                    var _material = JSON.parse(resData.materialList);
+                    console.log(_basis);
+                    console.log(_material);
+                    for (let i = 0, len = _basis.length; i < len; i++) {
+                        basisList += `<li>${_basis[i].basisContent}</li>`
+                    };
+                    for (let i = 0, len = _material.length; i < len; i++) {
+                        materialList += `<li>${_material[i].material}</li>`;
+                    };
+                    console.log(basisList);
+                    console.log(materialList);
+                    $("#isPay").text(isPay);
+                    $("#legalPromiseDays").text(legalPromiseDays);
+                    $("#promiseDays").text(promiseDays);
+                    $("#theirGuide").text(theirGuide);
+                    $("#caseType").text(caseType);
+                    $("#caseProperty").text(caseProptery);
+                    $("#basisList").html(basisList);
+                    $("#materialList").html(materialList);
+                    // $("")
+                } else {
+                    $.dialog({
+                        "txt": res.msg
+                    });
+                }
+            },
+            fail: function() {
+                $.dialog();
+            }
+        })
+    })
+</script>
+
+</html>

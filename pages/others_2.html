@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/dialog.css">
+    <title>保安员证件办理进度查询</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="../js/dialog.js"></script>
+    <script src="../js/globaldata.js"></script>
+    <style>
+        .wrap {
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        
+        .form-wrap form .input-wrap:first-child {
+            margin-top: 0;
+        }
+        
+        .select {
+            width: 160px;
+            margin-right: 25px;
+        }
+        
+        .input {
+            flex: 1;
+        }
+        
+        .label {
+            margin-right: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <div class="menu-name"><span>大厅</span><i class="sm-icon-arrow"></i><span>其他查询</span><i class="sm-icon-arrow"></i><span>保安员证件办理进度查询</span></div>
+            <div class="menu-items"><a href="javascript:history.back();"><i class="icon-back" style="margin-bottom:0;margin-right:25px"></i></a><a href="javascript:showItem();"><i class="icon-menus" style="margin-bottom:0;margin-right:25px"></i></a>
+                <a href="../index.html"><i class="icon-home" style="margin-bottom:0"></i></a>
+            </div>
+        </header>
+        <div class="mlist-wrap hide">
+            <ul class="mlist">
+                <li><a href="../pages/zbjd.html">周边警点一键查询</a></li>
+                <li><a href="../pages/sfzbl.html">身份证办理进度查询</a></li>
+                <li><a href="../pages/xxyw.html">线下业务办理指南</a></li>
+                <li><a href="../pages/wfcx.html">车辆违法查询</a></li>
+                <li><a href="../pages/xwdt.html">新闻动态</a></li>
+                <li><a href="../pages/crjbl.html">出入境办理进度查询</a></li>
+                <li><a href="../pages/cmcx.html">重名查询</a></li>
+                <li><a href="../pages/jszcx.html">驾驶证信息查询</a></li>
+                <li><a href="../pages/others.html">保安员考试成绩查询</a></li>
+                <li><a href="../pages/others.html">保安员证件办理进度查询</a></li>
+                <li><a href="../pages/others.html">网上事项办理进度查询</a></li>
+            </ul>
+        </div>
+        <script>
+            $(".mlist-wrap").click(function() {
+                $(".mlist-wrap").toggleClass("hide");
+            })
+
+            function showItem() {
+                $(".mlist-wrap").toggleClass("hide");
+            }
+        </script>
+        <div class="form-wrap">
+            <form>
+                <div class="input-wrap">
+                    <label class="label">身份证号</label><input type="text" placeholder="请输入身份证号" class="input" name="idCode">
+                </div>
+                <div class="input-wrap">
+                    <a href="javascript:check();" class="btn-lg"><span>查</span>询</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</body>
+<script src="../js/win_size.js"></script>
+<script>
+    function check() {
+        let idCode = $("input[name='idCode']").val().replace(/\s+/g, "");
+        let reg = new RegExp("^((1[1-5])|(2[1-3])|(3[1-7])|(4[1-6])|(5[0-4])|(6[1-5])|71|(8[12])|91)\\d{4}(((19|20)\\d{2}(0[13-9]|1[012])(0[1-9]|[12]\\d|30))|((19|20)\\d{2}(0[13578]|1[02])31)|((19|20)\\d{2}02(0[1-9]|1\\d|2[0-8]))|((19|20)([13579][26]|[2468][048]|0[048])0229))\\d{3}(\\d|X|x)?$", "g");
+        let isId = reg.exec(idNum);
+        console.log(isId); //不合法返为null
+        if (isId == null) {
+            $.dialog({
+                "txt": '请正确输入身份证号码！'
+            });
+            return;
+        } else {
+            var info = {
+                "sfzh": idCode
+            };
+            var authjson = JSON.stringify(auth);
+            var infojson = JSON.stringify(info);
+            var data = "auth=" + authjson + "&info=" + infojson;
+            $.ajax({
+                url: urlHead + SFZ,
+                data: data,
+                type: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                dataType: "json",
+                success: function(res) {
+                    // success
+                    console.log(res);
+                    let err = res.errCode;
+                    switch (err) {
+                        case "1":
+                            $.dialog({
+                                "txt": res.msg
+                            });
+                            break;
+                        case "0":
+                            storage.setItem("sfzbl", JSON.stringify(res));
+                            window.location.assign("result.html?cnt=" + "sfz");
+                            break;
+                        default:
+                            $.dialog({
+                                "txt": res.msg
+                            });
+                            break;
+                    }
+                },
+                fail: function() {
+                    // fail
+                    $.dialog();
+                },
+            })
+        }
+        console.log(info);
+    }
+</script>
+
+</html>

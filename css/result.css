@@ -1,0 +1,247 @@
+.wrap {
+    position: relative;
+    padding-top: 80px;
+    font-size: 18px;
+}
+
+.cline {
+    width: 25px;
+    margin-bottom: 15px;
+}
+
+.rline {
+    height: 25px;
+    margin-right: 15px;
+}
+
+
+/*
+*驾驶证
+*/
+
+.jsz {
+    width: 100%;
+}
+
+.jsz .cnt {
+    margin: 15px;
+}
+
+.jsz .cnt-wrap {
+    padding-left: 25px;
+    padding-right: 45px;
+    padding-top: 120px;
+    border-left: 1px solid #fff;
+    position: relative;
+    min-height: 240px;
+}
+
+.cnt-label {
+    position: absolute;
+    left: -13px;
+    top: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.jsz-info {
+    width: 100%;
+}
+
+[class^="col"] {
+    background-color: transparent;
+    font-size: 16px;
+    letter-spacing: normal;
+    border: 1px solid #fff;
+    padding: 30px 0;
+    margin-left: 0;
+    border-left: none;
+}
+
+.jsz-info li {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.jsz-info li:first-child .col {
+    border-bottom: none;
+    padding: 15px 0;
+}
+
+
+/*
+*身份证
+*/
+
+.sfz {
+    padding-right: 20px;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.sfz-tit {
+    text-align: center;
+    font-size: 18px;
+    line-height: 64px;
+}
+
+.sfz-process {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    margin-top: 45px;
+}
+
+.sfz-process li {
+    border-top: 1px solid #fff;
+    padding-right: 60px;
+    position: relative;
+}
+
+.sfz-process li:first-child {
+    padding-left: 60px;
+}
+
+.sfz-status {
+    position: relative;
+    top: -13px;
+    writing-mode: vertical-lr;
+}
+
+
+/*
+*出入境
+*/
+
+.crj {
+    width: 100%;
+    padding-top: 45px;
+    border-left: 1px solid #fff;
+}
+
+.crj-process {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.crj-process li {
+    flex: 1;
+    position: relative;
+}
+
+.crj-label {
+    display: flex;
+    align-items: center;
+    position: relative;
+    letter-spacing: normal;
+    left: -13px;
+}
+
+.card-process {
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 10px 15px;
+    margin: 0 50px;
+    margin-top: 15px;
+    position: relative;
+}
+
+.card-process li {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-process li::before {
+    content: "";
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: url("../imgs/i_ok.png") no-repeat;
+    background-size: contain;
+    text-align: center;
+    margin: 0 auto 8px auto;
+    z-index: 999;
+}
+
+.card-process li.refuse::before {
+    content: "";
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: url("../imgs/i_no.png") no-repeat;
+    background-size: contain;
+    text-align: center;
+    margin: 0 auto 8px auto;
+    z-index: 999;
+}
+
+.card-process li~li::after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    position: absolute;
+    left: -50%;
+    top: 15px;
+    /*z-index: -1;*/
+    /*放置在数字层后面*/
+}
+
+.crj [class^="icon"] {
+    width: 25px;
+    height: 25px;
+}
+
+
+/*
+*违章
+*/
+
+.wz {
+    padding-right: 20px;
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, .2);
+    padding: 25px 45px;
+}
+
+.wz-list {
+    /*border-left: 2px solid #fff;*/
+    height: 100%;
+    overflow-y: auto;
+    position: relative;
+}
+
+.wz-list li::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 11px;
+    height: 100%;
+    width: 2px;
+    background-color: #fff;
+}
+
+.wz-list li {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    letter-spacing: normal;
+    margin-bottom: 25px;
+    /*margin-left: -13px;*/
+}
+
+.wz [class^="sm-icon"] {
+    margin: 0 5px;
+}

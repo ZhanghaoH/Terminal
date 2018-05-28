@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/dialog.css">
+    <title>新闻动态</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="../js/dialog.js"></script>
+    <script src="../js/globaldata.js"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.3&key=e31e1eb03a47963714cbad012ae86c9e"></script>
+    <style>
+        .wrap {
+            position: relative;
+            padding-top: 80px;
+            font-size: 18px;
+        }
+        
+        .xxyw-wrap {
+            width: 100%;
+            /*height: 100%;*/
+            overflow: auto;
+            /*padding-bottom: 50px;
+            padding-top: 50px;*/
+            margin: 50px 0;
+            box-sizing: border-box;
+            display: flex;
+            flex-flow: row wrap;
+            align-items: flex-start;
+            align-content: flex-start;
+            justify-content: space-between;
+        }
+        
+        .xxyw-wrap li {
+            width: 45%;
+            box-sizing: border-box;
+            line-height: 1.5;
+            background-color: #565572;
+            border-radius: 6px;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+        }
+        
+        .xxyw-wrap li a {
+            color: #fff;
+            display: block;
+        }
+        
+        .button-wrap {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+        }
+        
+        .button {
+            box-sizing: border-box;
+            padding: 10px 25px;
+            cursor: pointer;
+        }
+        
+        .time {
+            text-align: right;
+            font-size: 14px;
+            letter-spacing: normal;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <div class="menu-name"><span>大厅</span><i class="sm-icon-arrow"></i><span>新闻动态</span></div>
+            <div class="menu-items"><a href="javascript:history.back();"><i class="icon-back" style="margin-bottom:0;margin-right:25px"></i></a><a href="javascript:showItem();"><i class="icon-menus" style="margin-bottom:0;margin-right:25px"></i></a>
+                <a href="../index.html"><i class="icon-home" style="margin-bottom:0"></i></a>
+            </div>
+        </header>
+        <ul class="xxyw-wrap">
+            <li><a href="../pages/sfzbl.html">身份证办理进度查询</a></li>
+            <li><a href="../pages/xxyw.html">线下业务办理指南</a></li>
+            <li><a href="../pages/wfcx.html">车辆违法查询</a></li>
+            <li><a href="../pages/xwdt.html">新闻动态</a></li>
+            <li><a href="../pages/crjbl.html">出入境办理进度查询</a></li>
+            <li><a href="../pages/cmcx.html">重名查询</a></li>
+            <li><a href="../pages/jszcx.html">驾驶证信息查询</a></li>
+            <li><a href="../pages/others.html">保安员考试成绩查询</a></li>
+            <li><a href="../pages/others.html">保安员证件办理进度查询</a></li>
+            <li><a href="../pages/others.html">网上事项办理进度查询</a></li>
+            <li><a href="../pages/others.html">网上事项办理进度查询</a></li>
+            <li><a href="../pages/others.html">网上事项办理进度查询</a></li>
+            <li><a href="../pages/others.html">网上事项办理进度查询</a></li>
+            <li><a href="../pages/others.html">网上事项办理进度查询</a></li>
+        </ul>
+        <div class="button-wrap">
+            <div class="btn button heigher" data-index="0">警情通告</div>
+            <div class="btn button" data-index="1">警方提示</div>
+            <div class="btn button" data-index="2">请民协助</div>
+            <!-- <div class="btn button" data-index="3">出入境</div> -->
+        </div>
+    </div>
+    <div class="mlist-wrap hide">
+        <ul class="mlist">
+            <li><a href="../pages/zbjd.html">周边警点一键查询</a></li>
+            <li><a href="../pages/sfzbl.html">身份证办理进度查询</a></li>
+            <li><a href="../pages/xxyw.html">线下业务办理指南</a></li>
+            <li><a href="../pages/wfcx.html">车辆违法查询</a></li>
+            <li><a href="../pages/xwdt.html">新闻动态</a></li>
+            <li><a href="../pages/crjbl.html">出入境办理进度查询</a></li>
+            <li><a href="../pages/cmcx.html">重名查询</a></li>
+            <li><a href="../pages/jszcx.html">驾驶证信息查询</a></li>
+            <li><a href="../pages/others.html">保安员考试成绩查询</a></li>
+            <li><a href="../pages/others.html">保安员证件办理进度查询</a></li>
+            <li><a href="../pages/others.html">网上事项办理进度查询</a></li>
+        </ul>
+    </div>
+    <script>
+        $(".mlist-wrap").click(function() {
+            $(".mlist-wrap").toggleClass("hide");
+        })
+
+        function showItem() {
+            $(".mlist-wrap").toggleClass("hide");
+        }
+    </script>
+</body>
+<script src="../js/win_size.js"></script>
+<script src="../js/getsearch.js"></script>
+<script>
+    $(function() {
+        var resData;
+        var list_html = "";
+        var info = {
+            "type": 1,
+            "dept": "警情通告"
+        };
+        getNews();
+        $("body").on("click", ".button", function() {
+            $(".button").removeClass('heigher');
+            $(this).addClass('heigher');
+            console.log($(this).data("index"));
+            c_index = $(this).data("index");
+            switch (c_index) {
+                case 0:
+                    info = {
+                        "type": 1,
+                        "dept": "警情通告"
+                    };
+                    break;
+                case 1:
+                    info = {
+                        "type": 2,
+                        "dept": "警方提示"
+                    };
+                    break;
+                case 2:
+                    info = {
+                        "type": 3,
+                        "dept": "请民协助"
+                    };
+                    break;
+                    // case 3:
+
+                    //     break;
+                default:
+                    break;
+            }
+            getNews();
+        });
+
+        function getNews() {
+            $.ajax({
+                url: urlHead1 + jq_news,
+                data: {
+                    "info": JSON.stringify(info)
+                },
+                type: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                dataType: "json",
+                success: function(res) {
+                    // success
+                    // var res = {
+                    //     "errCode": "0",
+                    //     "msg": "请求成功",
+                    //     "resultData": [{
+                    //         "context": "<p>\n\t<embed height=\"0\" id=\"xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd\" type=\"application/thunder_download_plugin\" width=\"0\"></embed><span style=\"color: rgb(51, 51, 51); font-family: Tahoma, Arial, sans-serif; font-size: 14px;\">【丽水纵火案】2015年10月31日凌晨，浙江丽水一小区住户家中着火，消防人员在现场发现一对老夫妇、两名小男孩共4名死者。经公安机关初步查证，该火灾系人为纵火，遇难老夫妇的前女婿黄文旺有重大作案嫌疑，目前不知去向。警方向全社会发出悬赏通告。扩散擒凶！</span></p>\n<p style=\"text-align: center;\">\n\t<span style=\"color: rgb(51, 51, 51); font-family: Tahoma, Arial, sans-serif; font-size: 14px;\">\\</span><span style=\"color: rgb(51, 51, 51); font-family: Tahoma, Arial, sans-serif; font-size: 14px;\"><img alt=\"\" src=\"http://app1.henanga.gov.cn/jmt/userfiles/images/2000-2.jpeg\" style=\"width: 310px; height: 382px;\" /></span></p>\n<p style=\"text-align: center;\">\n\t<span style=\"color: rgb(51, 51, 51); font-family: Tahoma, Arial, sans-serif; font-size: 14px;\"><img alt=\"\" src=\"http://app1.henanga.gov.cn/jmt/userfiles/images/2000.jpeg\" style=\"width: 310px; height: 454px;\" /></span></p>\n<p>\n\t<embed height=\"0\" id=\"xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd\" type=\"application/thunder_download_plugin\" width=\"0\"></embed></p>                                                                                                                                                                                                                                        ",
+                    //         "dept": "河南省公安厅",
+                    //         "id": 668,
+                    //         "title": "丽水纵火案  2015年10月31日",
+                    //         "type": "3",
+                    //         "uploadtime": "2015-11-01 21:20:36"
+                    //     }, {
+                    //         "context": "<p>\n\t<embed height=\"0\" id=\"xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd\" type=\"application/thunder_download_plugin\" width=\"0\"><span style=\"color: rgb(51, 51, 51); font-family: Tahoma, Arial, sans-serif; font-size: 14px;\">【全民抓盗贼】</span></embed></p>\n<p>\n\t<span style=\"color: rgb(51, 51, 51); font-family: Tahoma, Arial, sans-serif; font-size: 14px;\">2015年4月5日，湘潭市岳塘区发生一起入室盗窃案。经侦查，嫌疑人龚科，男，25岁，身高1.78米，身份证号码：430902199005136031。请广大网友留意，对提供线索抓获犯罪嫌疑人的奖励人民币2万元。联系人：易警官13807321110，杨警官18873289003，王警官18873288780。请扩散。</span></p>\n<p style=\"text-align: center;\">\n\t<span style=\"color: rgb(51, 51, 51); font-family: Tahoma, Arial, sans-serif; font-size: 14px;\"><img alt=\"\" src=\"http://app1.henanga.gov.cn/jmt/userfiles/images/460.jpeg\" style=\"width: 310px; height: 382px;\" /></span></p>                                                                                                     ",
+                    //         "dept": "河南省公安厅",
+                    //         "id": 667,
+                    //         "title": "【全民抓盗贼】",
+                    //         "type": "3",
+                    //         "uploadtime": "2015-11-01 21:18:07"
+                    //     }, {
+                    //         "context": "<div>\n\t<embed height=\"0\" id=\"xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd\" type=\"application/thunder_download_plugin\" width=\"0\"></embed></div>\n<p>\n\t&nbsp;</p>\n<p align=\"center\">\n\t<strong>姚元首</strong></p>\n<p align=\"left\">\n\t转载来源:公安部&nbsp;&nbsp;</p>\n<p style=\"text-align: center;\">\n\t&nbsp;</p>\n<p style=\"text-align: center;\">\n\t<img alt=\"\" src=\"http://app1.henanga.gov.cn/jmt/userfiles/images/yaoyuanshou.png\" style=\"width: 120px; height: 159px;\" /></p>\n<p align=\"left\">\n\t姓 名：姚元首</p>\n<p align=\"left\">\n\t性 别：男</p>\n<p align=\"left\">\n\t民族：侗族</p>\n<p align=\"left\">\n\t出生日期：1994年10月10日</p>\n<p align=\"left\">\n\t方言口音：贵州口音</p>\n<p align=\"left\">\n\t身 高： 155cm左右</p>\n<p align=\"left\">\n\t体型：中等身材</p>\n<p align=\"left\">\n\t身份证号码：522229199410100054</p>\n<p align=\"left\">\n\t在逃编人员号：T5223010100002015060003</p>\n<p align=\"left\">\n\t户籍住址：贵州省松桃苗族自治县大坪场镇黄泥村佛山脚组</p>\n<p align=\"left\">\n\t请各地公安机关接此通缉令后，立即部署查缉工作，发现该犯罪嫌疑人即予拘留，并速告我部五局。</p>\n<p>\n\t<embed height=\"0\" id=\"xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd\" type=\"application/thunder_download_plugin\" width=\"0\"></embed></p>\n<p>\n\t<embed height=\"0\" id=\"xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd\" type=\"application/thunder_download_plugin\" width=\"0\"></embed></p>\n<p>\n\t<embed height=\"0\" id=\"xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd\" type=\"application/thunder_download_plugin\" width=\"0\"></embed></p>\n<p>\n\t<embed height=\"0\" id=\"xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd\" type=\"application/thunder_download_plugin\" width=\"0\"></embed></p>                                                                                                                                         ",
+                    //         "dept": "河南省公安厅",
+                    //         "id": 278,
+                    //         "title": "公安部A级通缉令-姚元首",
+                    //         "type": "3",
+                    //         "uploadtime": "2015-07-06 08:58:09"
+                    //     }, {
+                    //         "context": "<h1 class=\"hetitle_01\" style=\"margin: 10px 0px; padding: 0px; font-family: 宋体; font-size: 16px; text-align: center; height: auto; line-height: 20px; color: rgb(0, 0, 0);\">\r\n\t<gettitle style=\"margin: 0px; padding: 0px;\">张承禹</gettitle></h1>\r\n<h2 class=\"hetitle_01\" style=\"margin: 0px 0px 10px; padding: 0px; font-family: 宋体; font-size: 14px; font-weight: normal; text-align: center; min-height: 20px; line-height: 20px; color: rgb(0, 0, 0); height: auto !important;\">\r\n\t&nbsp;</h2>\r\n<div class=\"newsattr z12\" style=\"margin: 0px 0px 15px; padding: 0px; color: rgb(51, 102, 153); font-family: 宋体;\">\r\n\t转载来源:公安部&nbsp;&nbsp;</div>\r\n<div class=\"newsattr z12\" style=\"margin: 0px 0px 15px; padding: 0px; color: rgb(51, 102, 153); font-family: 宋体; text-align: center;\">\r\n\t<img alt=\"\" border=\"0\" src=\"http://www.cpd.com.cn/n3547/n3649/n8233/c66509/part/66518.jpg\" style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-align: center; margin: 0px auto; padding: 0px; width: 160px; height: 200px;\" /></div>\r\n<div class=\"newsattr z12\" style=\"margin: 0px 0px 15px; padding: 0px; color: rgb(51, 102, 153); font-family: 宋体;\">\r\n\t<span style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px;\">&nbsp; &nbsp; 姓 名：张承禹</span><br style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px; margin: 0px; padding: 0px;\" />\r\n\t<span style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px;\">&nbsp;&nbsp;&nbsp; 方言口音：湖南口音</span><br style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px; margin: 0px; padding: 0px;\" />\r\n\t<span style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px;\">&nbsp;&nbsp;&nbsp; 性 别：男</span><br style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px; margin: 0px; padding: 0px;\" />\r\n\t<span style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px;\">&nbsp;&nbsp;&nbsp; 出生日期：1970年7月23日出生&nbsp;</span><br style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px; margin: 0px; padding: 0px;\" />\r\n\t<span style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px;\">&nbsp;&nbsp;&nbsp; 身份证号：430822197007238833&nbsp;</span><br style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px; margin: 0px; padding: 0px;\" />\r\n\t<span style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px;\">&nbsp;&nbsp;&nbsp; 身 高：1.70米左右</span><br style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px; margin: 0px; padding: 0px;\" />\r\n\t<span style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px;\">&nbsp;&nbsp;&nbsp; 脸 型：长型脸</span><br style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px; margin: 0px; padding: 0px;\" />\r\n\t<span style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px;\">&nbsp;&nbsp;&nbsp; 体型：体态中等</span><br style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px; margin: 0px; padding: 0px;\" />\r\n\t<span style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px;\">&nbsp;&nbsp;&nbsp; 曾用姓名：张虎成</span><br style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px; margin: 0px; padding: 0px;\" />\r\n\t<span style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px;\">&nbsp;&nbsp;&nbsp; 户籍住址：湖南省张家界市桑植县沙塔坪乡大庄村大庄组</span><br style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px; margin: 0px; padding: 0px;\" />\r\n\t<span style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px;\">&nbsp;&nbsp;&nbsp; 简要案情：2009年8月2日，湖南省长沙市望城县星城镇发生一起故意杀人案件，致6人死亡、2人受伤。经工作发现，张承禹有重大作案嫌疑，现该人在逃。对发现线索的举报人、协助缉捕有功的单位或个人，将给予人民币5万元奖励。</span><br style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px; margin: 0px; padding: 0px;\" />\r\n\t<span style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px;\">&nbsp;&nbsp;&nbsp; 通缉日期：2009年8月3日</span><br style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px; margin: 0px; padding: 0px;\" />\r\n\t<span style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-indent: 28px;\">&nbsp;&nbsp;&nbsp; 通缉编号：公缉[2009]47号</span></div>\r\n",
+                    //         "dept": "河南省公安厅",
+                    //         "id": 277,
+                    //         "title": "公安部A级通缉令-张承禹",
+                    //         "type": "3",
+                    //         "uploadtime": "2015-07-06 08:50:30"
+                    //     }, {
+                    //         "context": "<h1 class=\"hetitle_01\" style=\"margin: 10px 0px; padding: 0px; font-family: 宋体; font-size: 16px; text-align: center; height: auto; line-height: 20px; color: rgb(0, 0, 0);\">\r\n\t<gettitle style=\"margin: 0px; padding: 0px;\">李志强</gettitle></h1>\r\n<h2 class=\"hetitle_01\" style=\"margin: 0px 0px 10px; padding: 0px; font-family: 宋体; font-size: 14px; font-weight: normal; text-align: center; min-height: 20px; line-height: 20px; color: rgb(0, 0, 0); height: auto !important;\">\r\n\t&nbsp;</h2>\r\n<div class=\"newsattr z12\" style=\"margin: 0px 0px 15px; padding: 0px; color: rgb(51, 102, 153); font-family: 宋体;\">\r\n\t转载来源:公安部&nbsp;&nbsp;</div>\r\n<div class=\"newsattr z12\" style=\"margin: 0px 0px 15px; padding: 0px; color: rgb(51, 102, 153); font-family: 宋体; text-align: center;\">\r\n\t<img alt=\"\" border=\"0\" src=\"http://www.cpd.com.cn/n3547/n3649/n8233/c66492/part/66501.jpg\" style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-align: center; margin: 0px auto; padding: 0px; width: 160px; height: 200px;\" /></div>\r\n<div class=\"newsattr z12\" style=\"margin: 0px 0px 15px; padding: 0px; color: rgb(51, 102, 153); font-family: 宋体; text-align: center;\">\r\n\t<div style=\"text-align: left;\">\r\n\t\t&nbsp;</div>\r\n\t<div>\r\n\t\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-indent: 21pt; text-align: left;\">\r\n\t\t\t姓 名：李志强</div>\r\n\t\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-indent: 21pt; text-align: left;\">\r\n\t\t\t性 别：男</div>\r\n\t\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-indent: 21pt; text-align: left;\">\r\n\t\t\t出生日期：1960年7月9日出生</div>\r\n\t\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-indent: 21pt; text-align: left;\">\r\n\t\t\t身份证号：442526196007092713&nbsp;<span style=\"margin: 0px; padding: 0px;\">&nbsp;&nbsp;</span></div>\r\n\t\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-indent: 21pt; text-align: left;\">\r\n\t\t\t户籍住址：广东省博罗县杨村华侨桔场总场部场北区十六座03号</div>\r\n\t\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-indent: 21pt; text-align: left;\">\r\n\t\t\t简要案情：2006年，广东省惠州市公安局经侦支队破获一起特大伪造货币案，缴获印刷设备一批、假人民币胶片一套及大量假人民币。经查，李志强系该窝点老板，现该人在逃。对发现线索的举报人、缉捕有功单位或个人，将给予人民币5万元奖励。</div>\r\n\t\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-indent: 21pt; text-align: left;\">\r\n\t\t\t通缉日期：2009年7月30日</div>\r\n\t\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-indent: 21pt; text-align: left;\">\r\n\t\t\t通缉编号：公缉[2009]45号</div>\r\n\t</div>\r\n</div>\r\n<p>\r\n\t&nbsp;</p>\r\n",
+                    //         "dept": "河南省公安厅",
+                    //         "id": 276,
+                    //         "title": "公安部A级通缉令-李志强",
+                    //         "type": "3",
+                    //         "uploadtime": "2015-07-06 08:49:20"
+                    //     }, {
+                    //         "context": "<h1 class=\"hetitle_01\" style=\"margin: 10px 0px; padding: 0px; font-family: 宋体; font-size: 16px; text-align: center; height: auto; line-height: 20px; color: rgb(0, 0, 0);\">\r\n\t<gettitle style=\"margin: 0px; padding: 0px;\">赵明军</gettitle></h1>\r\n<h2 class=\"hetitle_01\" style=\"margin: 0px 0px 10px; padding: 0px; font-family: 宋体; font-size: 14px; font-weight: normal; min-height: 20px; line-height: 20px; color: rgb(0, 0, 0); height: auto !important;\">\r\n\t<span style=\"color: rgb(51, 102, 153); font-size: 12px;\">转载来源:公安部 &nbsp;</span></h2>\r\n<p style=\"text-align: center;\">\r\n\t<img alt=\"\" border=\"0\" src=\"http://www.cpd.com.cn/n3547/n3649/n8233/c63417/part/63426.jpg\" style=\"color: rgb(0, 0, 0); font-family: 宋体; font-size: 14px; line-height: 25px; text-align: center; margin: 0px auto; padding: 0px; width: 160px; height: 200px;\" /></p>\r\n<div style=\"color: rgb(0, 0, 0); font-family: 宋体; font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-align: center;\">\r\n\t　　</div>\r\n<div style=\"color: rgb(0, 0, 0); font-family: 宋体; font-size: 14px; line-height: 25px; margin: 0px; padding: 0px;\">\r\n\t<div style=\"margin: 0px; padding: 0px; text-indent: 21pt;\">\r\n\t\t姓 名：赵明军</div>\r\n\t<div style=\"margin: 0px; padding: 0px; text-indent: 21pt;\">\r\n\t\t方言口音：重庆云阳口音&nbsp;</div>\r\n\t<div style=\"margin: 0px; padding: 0px; text-indent: 21pt;\">\r\n\t\t性 别：男&nbsp;</div>\r\n\t<div style=\"margin: 0px; padding: 0px; text-indent: 21pt;\">\r\n\t\t出生日期：1976-01-25&nbsp;</div>\r\n\t<div style=\"margin: 0px; padding: 0px; text-indent: 21pt;\">\r\n\t\t身份证号：511224197601251572&nbsp;</div>\r\n\t<div style=\"margin: 0px; padding: 0px; text-indent: 21pt;\">\r\n\t\t身 高：170&nbsp;</div>\r\n\t<div style=\"margin: 0px; padding: 0px; text-indent: 21pt;\">\r\n\t\t体型：体型较瘦&nbsp;</div>\r\n\t<div style=\"margin: 0px; padding: 0px; text-indent: 21pt;\">\r\n\t\t曾用姓名：绰号&ldquo;松劲&rdquo;、&ldquo;绔皮&rdquo;&nbsp;</div>\r\n\t<div style=\"margin: 0px; padding: 0px; text-indent: 21pt;\">\r\n\t\t户籍住址：重庆市云阳县盘石镇古桑村1组5号&nbsp;</div>\r\n\t<div style=\"margin: 0px; padding: 0px; text-indent: 21pt;\">\r\n\t\t身体标记：身高1.70米左右，体型较瘦，寸发，右小臂有一&ldquo;忍&rdquo;字纹身，右手拐处有一小块显白疤痕。操重庆云阳口音，好赌博，曾做过砖工。&nbsp;</div>\r\n\t<div style=\"margin: 0px; padding: 0px; text-indent: 21pt;\">\r\n\t\t简要案情：2004年7月至2007年9月期间，贾玉林、徐冯结、桂川庸、赵明军犯罪集团，流窜重庆市万州区、南岸区、云阳县以及湖北省武汉市，实施绑架杀人案件10起，杀害人质6名及同伙1名，勒索现金达51万余元。犯罪嫌疑人贾玉林、徐冯结、桂川庸已被抓获，赵明军现在逃。对提供线索的举报人、抓捕有功的单位或个人，将给予人民币5万元奖励。</div>\r\n\t<div style=\"margin: 0px; padding: 0px; text-indent: 21pt;\">\r\n\t\t通缉日期：2008-01-15&nbsp;</div>\r\n\t<div style=\"margin: 0px; padding: 0px; text-indent: 21pt;\">\r\n\t\t通缉编号：公缉[2008]6号</div>\r\n</div>\r\n<p>\r\n\t&nbsp;</p>\r\n",
+                    //         "dept": "河南省公安厅",
+                    //         "id": 275,
+                    //         "title": "公安部A级通缉令-赵明军",
+                    //         "type": "3",
+                    //         "uploadtime": "2015-07-06 08:48:21"
+                    //     }, {
+                    //         "context": "<h1 class=\"hetitle_01\" style=\"margin: 10px 0px; padding: 0px; font-family: 宋体; font-size: 16px; text-align: center; height: auto; line-height: 20px; color: rgb(0, 0, 0);\">\r\n\t<gettitle style=\"margin: 0px; padding: 0px;\">闫秀玲</gettitle></h1>\r\n<h2 class=\"hetitle_01\" style=\"margin: 0px 0px 10px; padding: 0px; font-family: 宋体; font-size: 14px; font-weight: normal; text-align: center; min-height: 20px; line-height: 20px; color: rgb(0, 0, 0); height: auto !important;\">\r\n\t&nbsp;</h2>\r\n<div class=\"newsattr z12\" style=\"margin: 0px 0px 15px; padding: 0px; color: rgb(51, 102, 153); font-family: 宋体;\">\r\n\t转载来源:公安部&nbsp;&nbsp;</div>\r\n<div class=\"newsattr z12\" style=\"margin: 0px 0px 15px; padding: 0px; color: rgb(51, 102, 153); font-family: 宋体; text-align: center;\">\r\n\t<img alt=\"\" border=\"0\" src=\"http://www.cpd.com.cn/n3547/n3649/n8233/c63353/part/63362.jpg\" style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; text-align: center; margin: 0px auto; padding: 0px; width: 160px; height: 200px;\" /></div>\r\n<div class=\"newsattr z12\" style=\"margin: 0px 0px 15px; padding: 0px; color: rgb(51, 102, 153); font-family: 宋体; text-align: center;\">\r\n\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-align: left;\">\r\n\t\t&nbsp; &nbsp; &nbsp; 姓 名：闫秀玲 　　</div>\r\n\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-align: left;\">\r\n\t\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 方言口音：吉林口音 　　</div>\r\n\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-align: left;\">\r\n\t\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 性 别：女 　　</div>\r\n\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-align: left;\">\r\n\t\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 出生日期：1963-02-23 　　</div>\r\n\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-align: left;\">\r\n\t\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 身份证号：222426196302231126 　</div>\r\n\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-align: left;\">\r\n\t\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 身 高：165 　　</div>\r\n\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-align: left;\">\r\n\t\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 体型：较瘦&nbsp;<span style=\"margin: 0px; padding: 0px;\">&nbsp;&nbsp;&nbsp;</span>　　</div>\r\n\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-align: left;\">\r\n\t\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 户籍住址：吉林长春市南关区清明街交通胡同委198组 　　</div>\r\n\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-align: left;\">\r\n\t\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 现在住址：吉林长春市南关区清明街交通胡同委198组 　　</div>\r\n\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-align: left;\">\r\n\t\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 简要案情：吉林省公安机关正在办理一起合同诈骗案。犯罪嫌疑人闫秀玲等以帮助高考低分学生联系入学为名，骗取办事费共计3700余万元，受害人达600余人。该案涉及面广，影响恶劣。目前，主犯闫秀玲仍在逃。对发现线索的举报人、缉捕有功的单位或个人给予奖励人民币5万元。　　</div>\r\n\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-align: left;\">\r\n\t\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 通缉日期：2007-08-03　　</div>\r\n\t<div style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 0px; text-align: left;\">\r\n\t\t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 通缉编号：公缉[2007]94号</div>\r\n</div>\r\n<p>\r\n\t&nbsp;</p>\r\n",
+                    //         "dept": "河南省公安厅",
+                    //         "id": 274,
+                    //         "title": "公安部A级通缉令-闫秀玲",
+                    //         "type": "3",
+                    //         "uploadtime": "2015-07-06 08:47:17"
+                    //     }, {
+                    //         "context": "<h1 class=\"hetitle_01\" style=\"margin: 10px 0px; padding: 0px; font-family: 宋体; font-size: 16px; text-align: center; height: auto; line-height: 20px; color: rgb(0, 0, 0);\">\r\n\t<gettitle style=\"margin: 0px; padding: 0px;\">杨福生</gettitle></h1>\r\n<h2 class=\"hetitle_01\" style=\"margin: 0px 0px 10px; padding: 0px; font-family: 宋体; font-size: 14px; font-weight: normal; text-align: center; min-height: 20px; line-height: 20px; color: rgb(0, 0, 0); height: auto !important;\">\r\n\t&nbsp;</h2>\r\n<div class=\"newsattr z12\" style=\"margin: 0px 0px 15px; padding: 0px; color: rgb(51, 102, 153); font-family: 宋体;\">\r\n\t&nbsp;转来来源:公安部</div>\r\n<div class=\"newsattr z12\" style=\"margin: 0px 0px 15px; padding: 0px; text-align: center; color: rgb(51, 102, 153); font-family: 宋体;\">\r\n\t<img alt=\"\" border=\"0\" src=\"http://www.cpd.com.cn/n3547/n3649/n8233/c1183943/part/1186478.jpg\" style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px auto; padding: 0px; width: 110px; height: 145px;\" />&nbsp;&nbsp;</div>\r\n<div class=\"newsattr z12\" style=\"margin: 0px 0px 15px; padding: 0px; text-align: center; color: rgb(51, 102, 153); font-family: 宋体;\">\r\n\t<div>\r\n\t\t&nbsp;</div>\r\n\t<div>\r\n\t\t<p style=\"color: rgb(0, 0, 0); font-size: 14px; line-height: 25px; margin: 0px; padding: 25px 0px 0px; text-align: left;\">\r\n\t\t\t　　姓 名：杨福生<br style=\"margin: 0px; padding: 0px;\" />\r\n\t\t\t　　性 别：男<br style=\"margin: 0px; padding: 0px;\" />\r\n\t\t\t　　出生日期：1976年9月24日出生<br style=\"margin: 0px; padding: 0px;\" />\r\n\t\t\t　　身份证号：142233197609240016<br style=\"margin: 0px; padding: 0px;\" />\r\n\t\t\t　　户籍住址：山西省五寨县小河头镇马军营村　<br style=\"margin: 0px; padding: 0px;\" />\r\n\t\t\t<br style=\"margin: 0px; padding: 0px;\" />\r\n\t\t\t　　简要案情：山西省忻州市公安机关在侦办一起职务侵占案过程中发现，忻州市保德县信用联社金库出纳杨福生利用职务之便，通过采取私刻印章冒领现金支票、无往来缴款凭证凭空记现金账等手段，非法占有1054余万元资金后逃匿。社会各界和广大人民群众积极提供有关线索，发现有关情况，请及时拨打110报警电话或0350&mdash;&mdash;7306288。对发现线索的举报人、缉捕有功的单位或个人，公安机关将给予奖励人民币10万元。&nbsp;<br style=\"margin: 0px; padding: 0px;\" />\r\n\t\t\t　　通缉日期：2011年2月12日<br style=\"margin: 0px; padding: 0px;\" />\r\n\t\t\t　　通缉编号：公缉[2011]8号</p>\r\n\t</div>\r\n</div>\r\n<p>\r\n\t&nbsp;</p>\r\n",
+                    //         "dept": "河南省公安厅",
+                    //         "id": 273,
+                    //         "title": "公安部A级通缉令-杨福生",
+                    //         "type": "3",
+                    //         "uploadtime": "2015-07-06 08:44:39"
+                    //     }, {
+                    //         "context": "<table align=\"center\" bgcolor=\"#f4faff\" border=\"1\" cellpadding=\"0\" cellspacing=\"0\" width=\"95%\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td align=\"left\" bgcolor=\"#d2e8ff\" height=\"28\" width=\"79\">\r\n\t\t\t\t姓 名：</td>\r\n\t\t\t<td align=\"left\" width=\"93\">\r\n\t\t\t\t&nbsp;汪寿泉</td>\r\n\t\t\t<td align=\"left\" bgcolor=\"#d2e8ff\" width=\"79\">\r\n\t\t\t\t<font color=\"#000000\">方言口音：</font></td>\r\n\t\t\t<td align=\"left\" width=\"131\">\r\n\t\t\t\t&nbsp;</td>\r\n\t\t\t<td align=\"center\" rowspan=\"6\">\r\n\t\t\t\t<img class=\"borders1\" height=\"205\" src=\"http://www.mps.gov.cn/n16/n1237/n1417/n456866/n2592915.files/n2592935.jpg\" width=\"154\" /></td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td align=\"left\" bgcolor=\"#d2e8ff\" height=\"28\">\r\n\t\t\t\t性 别：</td>\r\n\t\t\t<td align=\"left\">\r\n\t\t\t\t&nbsp;男</td>\r\n\t\t\t<td align=\"left\" bgcolor=\"#d2e8ff\" width=\"79\">\r\n\t\t\t\t<font color=\"#000000\">现在身份：</font></td>\r\n\t\t\t<td align=\"left\">\r\n\t\t\t\t&nbsp;</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td align=\"left\" bgcolor=\"#d2e8ff\" height=\"28\">\r\n\t\t\t\t出生日期：</td>\r\n\t\t\t<td align=\"left\">\r\n\t\t\t\t&nbsp;1964年6月16日</td>\r\n\t\t\t<td align=\"left\" bgcolor=\"#d2e8ff\" width=\"79\">\r\n\t\t\t\t<font color=\"#000000\">身份证号：</font></td>\r\n\t\t\t<td align=\"left\">\r\n\t\t\t\t&nbsp;310102196406160011</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td align=\"left\" bgcolor=\"#d2e8ff\" height=\"28\" width=\"79\">\r\n\t\t\t\t身 高：</td>\r\n\t\t\t<td align=\"left\">\r\n\t\t\t\t&nbsp;1.64米</td>\r\n\t\t\t<td align=\"left\" bgcolor=\"#d2e8ff\" width=\"79\">\r\n\t\t\t\t<font color=\"#000000\">其它证件：</font></td>\r\n\t\t\t<td align=\"left\">\r\n\t\t\t\t&nbsp;</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td align=\"left\" bgcolor=\"#d2e8ff\" height=\"28\">\r\n\t\t\t\t脸 型：</td>\r\n\t\t\t<td align=\"left\">\r\n\t\t\t\t&nbsp;</td>\r\n\t\t\t<td align=\"left\" bgcolor=\"#d2e8ff\" width=\"79\">\r\n\t\t\t\t<font color=\"#000000\">通缉日期：</font></td>\r\n\t\t\t<td align=\"left\">\r\n\t\t\t\t&nbsp;2010年12月7日</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td align=\"left\" bgcolor=\"#d2e8ff\" height=\"28\">\r\n\t\t\t\t体型：</td>\r\n\t\t\t<td align=\"left\">\r\n\t\t\t\t&nbsp;</td>\r\n\t\t\t<td align=\"left\" bgcolor=\"#d2e8ff\" width=\"79\">\r\n\t\t\t\t<font color=\"#000000\">通缉编号：</font></td>\r\n\t\t\t<td align=\"left\">\r\n\t\t\t\t&nbsp;公缉[2010]84号</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td align=\"left\" bgcolor=\"#d2e8ff\" height=\"28\">\r\n\t\t\t\t曾用姓名：</td>\r\n\t\t\t<td align=\"left\" colspan=\"4\">\r\n\t\t\t\t&nbsp;</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td align=\"left\" bgcolor=\"#d2e8ff\" height=\"28\">\r\n\t\t\t\t户籍住址：</td>\r\n\t\t\t<td align=\"left\" colspan=\"4\">\r\n\t\t\t\t&nbsp;上海市浦东新区上浦路510弄46号202室</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td align=\"left\" bgcolor=\"#d2e8ff\" height=\"28\">\r\n\t\t\t\t现在住址：</td>\r\n\t\t\t<td align=\"left\" colspan=\"4\">\r\n\t\t\t\t&nbsp;</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td align=\"left\" bgcolor=\"#d2e8ff\" height=\"28\">\r\n\t\t\t\t身体标记：</td>\r\n\t\t\t<td align=\"left\" colspan=\"4\">\r\n\t\t\t\t&nbsp;</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td align=\"left\" bgcolor=\"#d2e8ff\" height=\"61\">\r\n\t\t\t\t<font color=\"#000000\">简要案情：</font></td>\r\n\t\t\t<td align=\"left\" colspan=\"4\">\r\n\t\t\t\t<p class=\"12b\">\r\n\t\t\t\t\t<font color=\"#0000ff\">&nbsp;2010年9月14日，在上海市浦东新区发生一起故意杀人案，致2人死亡。经工作查明，汪寿泉有重大作案嫌疑，现在逃。对发现线索的举报人、协助缉捕有功单位或个人，将给予人民币1万元奖励。</font></p>\r\n\t\t\t</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n<p>\r\n\t&nbsp;</p>\r\n",
+                    //         "dept": "河南省公安厅",
+                    //         "id": 143,
+                    //         "title": "公安部B级通缉令-汪寿泉",
+                    //         "type": "3",
+                    //         "uploadtime": "2014-11-07 10:50:33"
+                    //     }]
+                    // };
+                    console.log(res);
+                    let resData = res.resultData;
+                    storage.setItem("news-center", JSON.stringify(resData));
+                    console.log(storage.getItem("news-center"));
+                    if (res.errCode == "0") {
+                        for (let i = 0, len = resData.length; i < len; i++) {
+                            list_html += `<li><a href="xwdt_detail.html?id=${resData[i].id}">${resData[i].title}<div class="time">${resData[i].uploadtime}</div></a></li>`;
+                        };
+                        $(".xxyw-wrap").html(list_html);
+                    } else {
+                        $.dialog({
+                            "txt": res.msg
+                        });
+                    }
+                },
+                fail: function() {
+                    // fail
+                    $.dialog();
+                },
+            })
+        }
+
+    })
+</script>
+
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/dialog.css">
+    <link rel="stylesheet" href="../css/result.css">
+    <title>查询结果</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="../js/dialog.js"></script>
+    <script src="../js/globaldata.js"></script>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <div class="menu-name"><span>大厅</span><i class="sm-icon-arrow"></i><span id="title">车辆违法查询</span><i class="sm-icon-arrow"></i><span>查询结果展示</span></div>
+            <div class="menu-items"><a href="javascript:history.back();"><i class="icon-back" style="margin-bottom:0;margin-right:25px"></i></a><a href="javascript:showItem();"><i class="icon-menus" style="margin-bottom:0;margin-right:25px"></i></a>
+                <a href="../index.html"><i class="icon-home" style="margin-bottom:0"></i></a>
+            </div>
+        </header>
+        <div class="result jsz">
+            <div class="cnt">
+                <span id="jsz-name"></span>: <span id="jsz-id"></span>
+            </div>
+            <div class="cnt-wrap">
+                <div class="cnt-label">
+                    <img class="rline" src="../imgs/line1.png" height="25" style="margin-right:10px">查询结果
+                </div>
+                <ul class="jsz-info">
+                    <li>
+                        <div class="col" style="border-left: 1px solid #fff;">档案编号</div>
+                        <div class="col">准驾车型</div>
+                        <div class="col">记分</div>
+                        <div class="col">有效期限</div>
+                    </li>
+                    <li>
+                        <div class="col" id="jsz-filenum" style=" border-left: 1px solid #fff;"></div>
+                        <div class="col" id="jsz-cartype"></div>
+                        <div class="col" id="jsz-goal"></div>
+                        <div class="col" id="jsz-time"></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="result sfz">
+            <div class="sfz-tit">受理编号：<span id="slbh">410001150008721</span></div>
+            <ul class="sfz-process">
+
+            </ul>
+        </div>
+        <div class="result crj">
+            <ul class="crj-process">
+                <li>
+                    <div class="crj-label">
+                        <img class="rline" src="../imgs/line1.png"> 证件种类：往来港澳通行证
+                        <span style="margin-left:15px">受理编号：</span>41000115008721
+                    </div>
+                    <ul class="card-process">
+                        <li>预受理</li>
+                        <li>受理</li>
+                        <li>审批</li>
+                        <li>制证</li>
+                        <li>发证</li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="crj-label">
+                        <img class="rline" src="../imgs/line1.png"> 证件种类：往来港澳通行证
+                        <span style="margin-left:15px">受理编号：</span>41000115008721
+                    </div>
+                    <ul class="card-process">
+                        <li>预受理</li>
+                        <li>受理</li>
+                        <li>审批</li>
+                        <li>制证</li>
+                        <li>发证</li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="crj-label">
+                        <img class="rline" src="../imgs/line1.png"> 证件种类：往来港澳通行证
+                        <span style="margin-left:15px">受理编号：</span>41000115008721
+                    </div>
+                    <ul class="card-process">
+                        <li>预受理</li>
+                        <li>受理</li>
+                        <li>审批</li>
+                        <li>制证</li>
+                        <li>发证</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="result wz">
+            <ul class="wz-list" onmouseover="this.style.overflowY='auto'" onmouseout="this.style.overflowY='hidden'">
+                <!--<li>
+                    <img class="rline" src="../imgs/line1.png" height="25" style="margin-right:10px">
+                    <div class="wz-info">
+                        <div class="wz-line1">
+                            <span>经三路红产路</span>&emsp;<span>不按规定停车（1039）</span>
+                        </div>
+                        <div class="wz-line2">
+                            <span>2015-04-12 14:01:41</span>&emsp;<i class="sm-icon-yuan"></i>100元&emsp;<i class="sm-icon-goal"></i>0分&emsp;未处理
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <img class="rline" src="../imgs/line1.png" height="25" style="margin-right:10px">
+                    <div class="wz-info">
+                        <div class="wz-line1">
+                            <span>经三路红产路</span>&emsp;<span>不按规定停车（1039）</span>
+                        </div>
+                        <div class="wz-line2">
+                            <span>2015-04-12 14:01:41</span>&emsp;<i class="sm-icon-yuan"></i>100元&emsp;<i class="sm-icon-goal"></i>0分&emsp;未处理
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <img class="rline" src="../imgs/line1.png" height="25" style="margin-right:10px">
+                    <div class="wz-info">
+                        <div class="wz-line1">
+                            <span>经三路红产路</span>&emsp;<span>不按规定停车（1039）</span>
+                        </div>
+                        <div class="wz-line2">
+                            <span>2015-04-12 14:01:41</span>&emsp;<i class="sm-icon-yuan"></i>100元&emsp;<i class="sm-icon-goal"></i>0分&emsp;未处理
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <img class="rline" src="../imgs/line1.png" height="25" style="margin-right:10px">
+                    <div class="wz-info">
+                        <div class="wz-line1">
+                            <span>经三路红产路</span>&emsp;<span>不按规定停车（1039）</span>
+                        </div>
+                        <div class="wz-line2">
+                            <span>2015-04-12 14:01:41</span>&emsp;<i class="sm-icon-yuan"></i>100元&emsp;<i class="sm-icon-goal"></i>0分&emsp;未处理
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <img class="rline" src="../imgs/line1.png" height="25" style="margin-right:10px">
+                    <div class="wz-info">
+                        <div class="wz-line1">
+                            <span>经三路红产路</span>&emsp;<span>不按规定停车（1039）</span>
+                        </div>
+                        <div class="wz-line2">
+                            <span>2015-04-12 14:01:41</span>&emsp;<i class="sm-icon-yuan"></i>100元&emsp;<i class="sm-icon-goal"></i>0分&emsp;未处理
+                        </div>
+                    </div>
+                </li>-->
+            </ul>
+        </div>
+    </div>
+    <div class="mlist-wrap hide">
+        <ul class="mlist">
+            <li><a href="../pages/zbjd.html">周边警点一键查询</a></li>
+            <li><a href="../pages/sfzbl.html">身份证办理进度查询</a></li>
+            <li><a href="../pages/xxyw.html">线下业务办理指南</a></li>
+            <li><a href="../pages/wfcx.html">车辆违法查询</a></li>
+            <li><a href="../pages/xwdt.html">新闻动态</a></li>
+            <li><a href="../pages/crjbl.html">出入境办理进度查询</a></li>
+            <li><a href="../pages/cmcx.html">重名查询</a></li>
+            <li><a href="../pages/jszcx.html">驾驶证信息查询</a></li>
+            <li><a href="../pages/others.html">保安员考试成绩查询</a></li>
+            <li><a href="../pages/others.html">保安员证件办理进度查询</a></li>
+            <li><a href="../pages/others.html">网上事项办理进度查询</a></li>
+        </ul>
+    </div>
+    <script>
+        $(".mlist-wrap").click(function() {
+            $(".mlist-wrap").toggleClass("hide");
+        })
+
+        function showItem() {
+            $(".mlist-wrap").toggleClass("hide");
+        }
+    </script>
+</body>
+<script src="../js/win_size.js"></script>
+<script>
+    $(function() {
+        let parm = location.search.split("?")[1];
+        // console.log(parm);
+        let para = parm.split("&")[0];
+        // console.log(para);
+        let title = para.split("=")[1];
+        console.log(title);
+        var txt;
+        switch (title) {
+            case "jsz":
+                txt = "驾驶证信息查询";
+                $(".result").css("display", "none");
+                $(".jsz").css("display", "initial");
+                let jsz_data = JSON.parse(storage.getItem("jszxx"));
+                // let jsz_data = {
+                //     "resultData": {
+                //         "sfzmhm": "410726199009096619",
+                //         "yxqz": "2026-02-26 00:00:00",
+                //         "syrq": "2026-02-26 00:00:00",
+                //         "ljjf": 0,
+                //         "xm": "秦继超",
+                //         "zt": "A",
+                //         "dabh": "410700657611",
+                //         "xb": "1",
+                //         "yxqs": "2016-02-26 00:00:00",
+                //         "qfrq": "2018-02-26 00:00:00",
+                //         "fzjg": "豫G",
+                //         "zjcx": "C1"
+                //     },
+                //     "errCode": 0,
+                //     "msg": "驾驶员信息"
+                // };
+                let res = jsz_data.resultData;
+                let time = res.yxqs.substr(0, 10) + "至" + res.yxqz.substr(0, 10);;
+                $("#jsz-name").text(res.xm);
+                $("#jsz-id").text(res.sfzmhm);
+                $("#jsz-filenum").text(res.dabh);
+                $("#jsz-goal").text(res.ljjf);
+                $("#jsz-cartype").text(res.zjcx);
+                $("#jsz-time").text(time);
+                break;
+            case "sfz":
+                txt = "身份证办理进度查询";
+                $(".result").css("display", "none");
+                $(".sfz").css("display", "flex");
+                $(".sfz-process").html("");
+                let sfz_data = JSON.parse(storage.getItem("sfzbl"));
+                $("#slbh").text(sfz_data.resultData[0].SFZH);
+                // let sfz_data = {
+                //     "errCode": "0",
+                //     "msg": "成功",
+                //     "resultData": [{
+                //         "BLLX": "办理",
+                //         "BLZT": "已经发证",
+                //         "FSSJ": "2014-04-05",
+                //         "SFZH": "411424109902010013"
+                //     }, {
+                //         "BLLX": "办理",
+                //         "BLZT": "已经发证",
+                //         "FSSJ": "2014-04-05",
+                //         "SFZH": "411424109902010013"
+                //     }, {
+                //         "BLLX": "办理",
+                //         "BLZT": "执证中",
+                //         "FSSJ": "2014-04-04",
+                //         "SFZH": "411424109902010013"
+                //     }]
+                // };
+                let sfz_len = sfz_data.resultData.length;
+                console.log(sfz_len);
+                let sfz_html = '<li><div class="sfz-status"><img class="cline" src="../imgs/line2.png" alt="">派出所受理</div></li><li><div class="sfz-status"><img class="cline" src="../imgs/line2.png" alt="">县（分）局审核</div></li>';
+                switch (sfz_len) {
+                    case 3:
+                        sfz_html += '<li><div class="sfz-status"><img class="cline" src="../imgs/line2.png" alt="">进入制证</div></li>';
+                        break;
+                    case 4:
+                        sfz_html += '<li><div class="sfz-status"><img class="cline" src="../imgs/line2.png" alt="">进入制证</div></li><li><div class="sfz-status"><img class="cline" src="../imgs/line2.png" alt="">已制证</div></li>';
+                        break;
+                    case 5:
+                        sfz_html += '<li><div class="sfz-status"><img class="cline" src="../imgs/line2.png" alt="">进入制证</div></li><li><div class="sfz-status"><img class="cline" src="../imgs/line2.png" alt="">已制证</div></li><li><div class="sfz-status"><img class="cline" src="../imgs/line2.png" alt="">已到派出所或邮寄中</div></li>';
+                        break;
+                    default:
+                        break;
+                };
+                $(".sfz-process").append(sfz_html);
+                break;
+            case "crj":
+                txt = "出入境办理进度查询";
+                $(".result").css("display", "none");
+                $(".crj").css("display", "initial");
+                // let res_crj = JSON.parse(storage.getItem("crjbl"));
+                let res_crj = {
+                    "resultData": [{
+                        "RECORDTIME": "2016-01-08 10:49:46",
+                        "SLBH": "410001150009554",
+                        "HJMC": "审批_审批未通过",
+                        "EMSHM": "",
+                        "SHJENDDATE": "",
+                        "ZJZL": "大陆居民往来台湾通行证",
+                        "IDCARD": "410181198409197512"
+                    }],
+                    "errCode": "0",
+                    "msg": null
+                };
+                let res_crj_data = res_crj.resultData;
+                $(".crj-process").html("");
+                let crj_html = "";
+                for (let i = 0, len = res_crj_data.length; i < len; i++) {
+                    let status = res_crj_data[i].HJMC;
+                    console.log(status);
+                    crj_html += `<li>
+                        <div class="crj-label">
+                            <img class="rline" src="../imgs/line1.png"> 证件种类：${res_crj_data[i].ZJZL}
+                            <span style="margin-left:15px">受理编号：</span>${res_crj_data[i].SLBH}
+                        </div>
+                        <ul class="card-process">
+                            <li>预受理</li>
+                            `;
+                    if (status.indexOf("发证") >= 0) {
+                        crj_html += `<li>受理</li><li>审批</li><li>制证</li><li>发证</li></ul></li>`;
+                    } else if (status.indexOf("制证") >= 0) {
+                        crj_html += `<li>受理</li><li>审批</li><li>制证</li></ul></li>`;
+                    } else if (status.indexOf("未通过") >= 0) {
+                        crj_html += `<li>受理</li><li class="refuse">审批(未通过)</li></ul></li>`;
+                    } else if (status.indexOf("受理") >= 0) {
+                        crj_html += `<li>受理</li></ul></li>`;
+                    } else {
+                        crj_html += `<li>受理</li><li>审批</li></ul></li>`;
+                    }
+                };
+                $(".crj-process").append(crj_html);
+                break;
+            default:
+                txt = "违章信息查询";
+                $(".result").css("display", "none");
+                $(".wz").css("display", "initial");
+                let res_wz = JSON.parse(storage.getItem("wzxx"));
+                // let res_wz = {
+                //     "resultData": [{
+                //         "wfxwdm": "1345",
+                //         "wfdz": "淇水路南海路口",
+                //         "clbj": "未处理",
+                //         "fkje": 200,
+                //         "wfsj": "2016-12-26 08:44:00.0",
+                //         "wfjfs": 3,
+                //         "pageNo": 0,
+                //         "hphm": "豫FC1111",
+                //         "hpzl": "02",
+                //         "wfxw": "机动车违反禁止标线指示的",
+                //         "wfbh": null
+                //     }, {
+                //         "wfxwdm": "1345",
+                //         "wfdz": "嵩山路与淮河路交叉口",
+                //         "clbj": "未处理",
+                //         "fkje": 200,
+                //         "wfsj": "2016-12-20 06:26:00.0",
+                //         "wfjfs": 3,
+                //         "pageNo": 0,
+                //         "hphm": "豫FC1111",
+                //         "hpzl": "02",
+                //         "wfxw": "机动车违反禁止标线指示的",
+                //         "wfbh": null
+                //     }],
+                //     "errCode": 0,
+                //     "msg": null
+                // };
+                let res_wz_data = res_wz.resultData;
+                $(".wz-list").html("");
+                let wz_html = "";
+                for (let i = 0, len = res_wz_data.length; i < len; ++i) {
+                    wz_html += `<li>
+                        <img class="rline" src="../imgs/line1.png" height="25" style="margin-right:10px">
+                        <div class="wz-info">
+                            <div class="wz-line1">
+                                <span>${res_wz_data[i].wfdz}</span>&emsp;<span>${res_wz_data[i].wfxw}（${res_wz_data[i].wfxwdm}）</span>
+                            </div>
+                            <div class="wz-line2">
+                                <span>${res_wz_data[i].wfsj}</span>&emsp;<i class="sm-icon-yuan"></i>${res_wz_data[i].fkje}元&emsp;<i class="sm-icon-goal"></i>${res_wz_data[i].wfjfs}分&emsp;${res_wz_data[i].clbj}
+                            </div>
+                        </div>
+                    </li>`;
+                }
+                $(".wz-list").append(wz_html);
+                break;
+        };
+        $("#title").text(txt);
+
+    })
+</script>
+
+</html>

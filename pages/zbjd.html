@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/dialog.css">
+    <title>周边警点</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="../js/dialog.js"></script>
+    <script src="../js/globaldata.js"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.3&key=e31e1eb03a47963714cbad012ae86c9e"></script>
+    <style>
+        .wrap {
+            position: relative;
+            padding-top: 80px;
+            font-size: 18px;
+        }
+        
+        .news-wrap {
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            padding-bottom: 50px;
+            box-sizing: border-box;
+            display: flex;
+        }
+        
+        .info {
+            flex: 1;
+            margin-right: 25px;
+        }
+        
+        .map {
+            flex: 1;
+        }
+        
+        .button-wrap {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+        }
+        
+        .button {
+            box-sizing: border-box;
+            padding: 10px 25px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <div class="menu-name"><span>大厅</span><i class="sm-icon-arrow"></i><span class="news-title">周边警点</span></div>
+            <div class="menu-items"><a href="javascript:showItem();"><i class="icon-menus" style="margin-bottom:0;margin-right:25px"></i></a><a href="../index.html"><i class="icon-home" style="margin-bottom:0"></i></a></div>
+        </header>
+        <div class="news-wrap">
+            <div class="info" id="panel">
+
+            </div>
+            <div class="map" id="container"></div>
+        </div>
+        <div class="button-wrap">
+            <div class="btn button heigher">派出所</div>
+            <div class="btn button">交通管理</div>
+            <div class="btn button">出入境</div>
+        </div>
+    </div>
+    <div class="mlist-wrap hide">
+        <ul class="mlist">
+            <li><a href="../pages/zbjd.html">周边警点一键查询</a></li>
+            <li><a href="../pages/sfzbl.html">身份证办理进度查询</a></li>
+            <li><a href="../pages/xxyw.html">线下业务办理指南</a></li>
+            <li><a href="../pages/wfcx.html">车辆违法查询</a></li>
+            <li><a href="../pages/xwdt.html">新闻动态</a></li>
+            <li><a href="../pages/crjbl.html">出入境办理进度查询</a></li>
+            <li><a href="../pages/cmcx.html">重名查询</a></li>
+            <li><a href="../pages/jszcx.html">驾驶证信息查询</a></li>
+            <li><a href="../pages/others.html">保安员考试成绩查询</a></li>
+            <li><a href="../pages/others.html">保安员证件办理进度查询</a></li>
+            <li><a href="../pages/others.html">网上事项办理进度查询</a></li>
+        </ul>
+    </div>
+    <script>
+        $(".mlist-wrap").click(function() {
+            $(".mlist-wrap").toggleClass("hide");
+        })
+
+        function showItem() {
+            $(".mlist-wrap").toggleClass("hide");
+        }
+    </script>
+</body>
+<script src="../js/win_size.js"></script>
+<script>
+    $(function() {
+        var mapObj = new AMap.Map('container');
+        var pos = [];
+        mapObj.plugin('AMap.Geolocation', function() {
+            geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true, //是否使用高精度定位，默认:true
+                timeout: 10000, //超过10秒后停止定位，默认：无穷大
+                maximumAge: 0, //定位结果缓存0毫秒，默认：0
+                convert: true, //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+                showButton: true, //显示定位按钮，默认：true
+                buttonPosition: 'LB', //定位按钮停靠位置，默认：'LB'，左下角
+                buttonOffset: new AMap.Pixel(10, 20), //定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+                showMarker: true, //定位成功后在定位到的位置显示点标记，默认：true
+                showCircle: true, //定位成功后用圆圈表示定位精度范围，默认：true
+                panToLocation: true, //定位成功后将定位到的位置作为地图中心点，默认：true
+                zoomToAccuracy: true //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+            });
+            mapObj.addControl(geolocation);
+            geolocation.getCurrentPosition();
+            AMap.event.addListener(geolocation, 'complete', onComplete); //返回定位信息
+            AMap.event.addListener(geolocation, 'error', onError); //返回定位出错信息
+        });
+        $(".button").click(function() {
+                let keyword = $(this).html();
+                console.log(keyword);
+                $(".button").css({
+                    height: "44px"
+                });
+                $(this).animate({
+                    height: "60px"
+                }, .4);
+                neighbor(keyword, pos, 3000, mapObj);
+            })
+            //解析定位结果
+        function onComplete(data) {
+            console.log([data.position.getLng(), data.position.getLat()]);
+            pos.push(data.position.getLng());
+            pos.push(data.position.getLat());
+            neighbor("户籍派出所", pos, 3000, mapObj);
+        }
+        //解析定位错误信息
+        function onError(data) {
+            $.dialog({
+                "txt": "定位失败"
+            });
+        }
+        // 调用searchNearBy方法
+        // 设定好相关的参数值后，调用searchNearBy方法进行查询，将''作为参数1，参数2为中心点坐标，参数3为半径，单位米，参数4为回调函数。
+        function neighbor(key, pos, radius, amap) {
+            AMap.service(["AMap.PlaceSearch"], function() {
+                var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+                    pageSize: 6,
+                    type: '政府机构及社会团体',
+                    pageIndex: 1,
+                    // city: "010", //城市
+                    map: amap,
+                    panel: "panel"
+                });
+
+                placeSearch.searchNearBy(key, pos, radius, function(status, result) {
+
+                });
+            });
+        }
+    })
+</script>
+
+</html>

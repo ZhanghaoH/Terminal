@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/dialog.css">
+    <title>详情界面</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="../js/dialog.js"></script>
+    <script src="../js/globaldata.js"></script>
+    <style>
+        .wrap {
+            position: relative;
+            padding-top: 80px;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .news-wrap {
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+        }
+        
+        .news-wrap li {
+            padding: 5px 0;
+        }
+        
+        ol {
+            list-style-type: none;
+            counter-reset: sectioncounter;
+        }
+        
+        ol li:before {
+            content: counter(sectioncounter) ".";
+            counter-increment: sectioncounter;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <div class="menu-name" style="width:auto"><span>大厅</span><i class="sm-icon-arrow"></i><span>线下业务办理指南</span><i class="sm-icon-arrow"></i><span class="xxyw-title">交管业务</span><i class="sm-icon-arrow"></i><span>详情</span></div>
+            <div class="menu-items"><a href="javascript:history.back();"><i class="icon-back" style="margin-bottom:0;margin-right:25px"></i></a><a href="javascript:showItem();"><i class="icon-menus" style="margin-bottom:0;margin-right:25px"></i></a>
+                <a href="../index.html"><i class="icon-home" style="margin-bottom:0"></i></a>
+            </div>
+        </header>
+        <ul class="news-wrap">
+            <li>办事时间：
+                <p id="workDateTime"></p>
+            </li>
+            <li>法律依据：
+                <p id="CasePursuant"></p>
+            </li>
+            <li>所需材料：
+                <p id="CaseMaterial"></p>
+            </li>
+            <li>办理流程：
+                <p id="blbz"></p>
+            </li>
+            <li>备注：
+                <p id="qtsm"></p>
+            </li>
+        </ul>
+        <div class="mlist-wrap hide">
+            <ul class="mlist">
+                <li><a href="../pages/zbjd.html">周边警点一键查询</a></li>
+                <li><a href="../pages/sfzbl.html">身份证办理进度查询</a></li>
+                <li><a href="../pages/xxyw.html">线下业务办理指南</a></li>
+                <li><a href="../pages/wfcx.html">车辆违法查询</a></li>
+                <li><a href="../pages/xwdt.html">新闻动态</a></li>
+                <li><a href="../pages/crjbl.html">出入境办理进度查询</a></li>
+                <li><a href="../pages/cmcx.html">重名查询</a></li>
+                <li><a href="../pages/jszcx.html">驾驶证信息查询</a></li>
+                <li><a href="../pages/others.html">保安员考试成绩查询</a></li>
+                <li><a href="../pages/others.html">保安员证件办理进度查询</a></li>
+                <li><a href="../pages/others.html">网上事项办理进度查询</a></li>
+            </ul>
+        </div>
+        <script>
+            $(".mlist-wrap").click(function() {
+                $(".mlist-wrap").toggleClass("hide");
+            })
+
+            function showItem() {
+                $(".mlist-wrap").toggleClass("hide");
+            }
+        </script>
+    </div>
+</body>
+<script src="../js/win_size.js"></script>
+<script src="../js/getsearch.js"></script>
+<script>
+    $(function() {
+        let parm = getSearch.parseURL(location.search);
+        console.log(parm);
+        let title = parm.cnt;
+        let id = parm.id;
+        console.log(title);
+        getDetails(title);
+
+        function getDetails(item) {
+            if (item == "traffic") {
+                $.ajax({
+                    url: urlHead2 + jg_xq,
+                    data: {
+                        "YWLX": id,
+                    },
+                    type: "POST",
+                    dataType: "json",
+                    success: function(res) {
+                        // var res = {
+                        //     "resultData": "{\r\n  \"ywlx\" : \"0114\",\r\n  \"CasePursuant\" : \"1、《中华人民共和国道路交通安全法》。2、《中华人民共和国道路交通安全法实施条例》。3、《机动车登记规定》。\",\r\n  \"workDateTime\" : \"自受理之日起一个工作日办结，对于所提交的车辆、资料、凭证有嫌疑的进入调查程序（调查嫌疑车辆、资料、凭证的时间不计入机动车登记时限）。\",\r\n  \"qtsm\" : \"\",\r\n  \"blbz\" : \"第一步：业务大厅排队取号后到受理窗口提交资料；第二步：到缴费窗口缴费相关费用；第三步：到牌证窗口领取牌证。\",\r\n  \"caseName\" : \"机动车变更登记（辖区内共同所有人变更）\",\r\n  \"CaseMaterial\" : \"1、《机动车变更登记/备案申请表》原件；2、变更前机动车所有人的身份证明原件和复印件；3、变更后机动车所有人的身份证明原件和复印件；4、《机动车登记证书》原件；5、《机动车行驶证》原件；6、共同所有的公证证明原件和复印件；属于夫妻双方共有的持证明夫妻关系的《居民户口簿》或者《结婚证》原件和复印件；7、代理登记的，还应提供代理人身份证明和机动车所有人出具的具有法律效力的书面委托书原件。\"\r\n}",
+                        //     "errCode": 0,
+                        //     "msg": "成功"
+                        // };
+                        if (res.errCode == "0") {
+                            let resData = JSON.parse(res.resultData);
+                            let workDateTime = resData.workDateTime;
+                            let blbz = resData.blbz;
+                            let CaseMaterial = resData.CaseMaterial;
+                            let CasePursuant = resData.CasePursuant;
+                            let qtsm = resData.qtsm;
+                            $("#workDateTime").text(workDateTime);
+                            $("#qtsm").text(qtsm);
+                            $("#CasePursuant").text(CasePursuant);
+                            $("#blbz").text(blbz);
+                            $("#CaseMaterial").text(CaseMaterial);
+                        } else {
+                            $.dialog({
+                                "txt": res.msg
+                            });
+                        }
+                    },
+                    fail: function() {
+                        $.dialog();
+                    }
+                })
+            }
+        }
+    })
+</script>
+
+</html>

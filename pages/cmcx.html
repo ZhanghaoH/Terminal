@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/dialog.css">
+    <title>重名查询</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="../js/dialog.js"></script>
+    <script src="../js/globaldata.js"></script>
+    <style>
+        .wrap {
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .form-wrap form .input-wrap:first-child {
+            margin-top: 0;
+        }
+
+        .input-wrap .select:nth-child(2) {
+            margin-right: 25px;
+        }
+
+        .select {
+            flex: 1;
+        }
+
+        .input {
+            flex: 1;
+        }
+
+        .label {
+            margin-right: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <div class="menu-name">
+                <span>大厅</span>
+                <i class="sm-icon-arrow"></i>
+                <span>重名查询大厅</span>
+            </div>
+            <div class="menu-items">
+                <a href="javascript:showItem();">
+                    <i class="icon-menus" style="margin-bottom:0;margin-right:25px"></i>
+                </a>
+                <a href="../index.html">
+                    <i class="icon-home" style="margin-bottom:0"></i>
+                </a>
+            </div>
+        </header>
+        <div class="mlist-wrap hide">
+            <ul class="mlist">
+                <li>
+                    <a href="../pages/zbjd.html">周边警点一键查询</a>
+                </li>
+                <li>
+                    <a href="../pages/sfzbl.html">身份证办理进度查询</a>
+                </li>
+                <li>
+                    <a href="../pages/xxyw.html">线下业务办理指南</a>
+                </li>
+                <li>
+                    <a href="../pages/wfcx.html">车辆违法查询</a>
+                </li>
+                <li>
+                    <a href="../pages/xwdt.html">新闻动态</a>
+                </li>
+                <li>
+                    <a href="../pages/crjbl.html">出入境办理进度查询</a>
+                </li>
+                <li>
+                    <a href="../pages/cmcx.html">重名查询</a>
+                </li>
+                <li>
+                    <a href="../pages/jszcx.html">驾驶证信息查询</a>
+                </li>
+                <li>
+                    <a href="../pages/others.html">保安员考试成绩查询</a>
+                </li>
+                <li>
+                    <a href="../pages/others.html">保安员证件办理进度查询</a>
+                </li>
+                <li>
+                    <a href="../pages/others.html">网上事项办理进度查询</a>
+                </li>
+            </ul>
+        </div>
+        <script>
+            $(".mlist-wrap").click(function () {
+                $(".mlist-wrap").toggleClass("hide");
+            })
+
+            function showItem() {
+                $(".mlist-wrap").toggleClass("hide");
+            }
+        </script>
+        <div class="form-wrap">
+            <form>
+                <div class="input-wrap">
+                    <label class="label">查询名字</label>
+                    <input type="text" placeholder="请输入需要查询的名字" class="input" name="name">
+                </div>
+                <div class="input-wrap">
+                    <label class="label">查询范围</label>
+                    <select name="city" class="select" style="border: none" id="city">
+                        <option value="410000">河南全省</option>
+                    </select>
+                    <select name="district" class="select" style="border: none" id="district">
+
+                    </select>
+                </div>
+                <script>
+                    $(function () {
+                        showDistrict();
+                        $.ajax({
+                            url: urlHead1 + police,
+                            data: "",
+                            type: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                            dataType: "json",
+                            success: function (res) {
+                                //success
+                                console.log(res);
+                                // let res = {
+                                //     "resultData": "[{\"orgId\":\"410100\",\"orgName\":\"郑州市\"},{\"orgId\":\"410200\",\"orgName\":\"开封市\"},{\"orgId\":\"410300\",\"orgName\":\"洛阳市\"},{\"orgId\":\"410400\",\"orgName\":\"平顶山市\"},{\"orgId\":\"410500\",\"orgName\":\"安阳市\"},{\"orgId\":\"410600\",\"orgName\":\"鹤壁市\"},{\"orgId\":\"410700\",\"orgName\":\"新乡市\"},{\"orgId\":\"410800\",\"orgName\":\"焦作市\"},{\"orgId\":\"410900\",\"orgName\":\"濮阳市\"},{\"orgId\":\"411000\",\"orgName\":\"许昌市\"},{\"orgId\":\"411100\",\"orgName\":\"漯河市\"},{\"orgId\":\"411200\",\"orgName\":\"三门峡市\"},{\"orgId\":\"411300\",\"orgName\":\"南阳市\"},{\"orgId\":\"411400\",\"orgName\":\"商丘市\"},{\"orgId\":\"411500\",\"orgName\":\"信阳市\"},{\"orgId\":\"411600\",\"orgName\":\"周口市\"},{\"orgId\":\"411700\",\"orgName\":\"驻马店市\"},{\"orgId\":\"410881\",\"orgName\":\"济源市\"},{\"orgId\":\"410181\",\"orgName\":\"巩义市\"},{\"orgId\":\"410225\",\"orgName\":\"兰考县\"},{\"orgId\":\"410482\",\"orgName\":\"汝州市\"},{\"orgId\":\"410526\",\"orgName\":\"滑县\"},{\"orgId\":\"410728\",\"orgName\":\"长垣县\"},{\"orgId\":\"411381\",\"orgName\":\"邓州市\"},{\"orgId\":\"411481\",\"orgName\":\"永城市\"},{\"orgId\":\"411525\",\"orgName\":\"固始县\"},{\"orgId\":\"411628\",\"orgName\":\"鹿邑县\"},{\"orgId\":\"411729\",\"orgName\":\"新蔡县\"}]",
+                                //     "errCode": "0",
+                                //     "msg": "成功"
+                                // };
+                                if (res.errCode == 0) {
+                                    let arr_area = JSON.parse(res.resultData);
+                                    let opt_html = "";
+                                    arr_area.map((e, i) => {
+                                        opt_html +=
+                                            `<option value="${e.orgId}">${e.orgName}</option>`
+                                    });
+                                    $("#city").append(opt_html);
+                                }
+                            },
+                            fail: function () {
+                                // fail
+                                $.dialog();
+                            },
+                        })
+                        $("select#city").change(function () {
+                            showDistrict();
+                            console.log($(this).val());
+                            let city = $(this).val() + "000000";
+                            let info = {
+                                "cityGuid": city
+                            };
+                            let jsoninfo = JSON.stringify(info);
+                            $.ajax({
+                                url: urlHead1 + police,
+                                data: jsoninfo,
+                                type: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                                dataType: "json",
+                                success: function (res) {
+                                    //success
+                                    console.log(res);
+                                    let res2 = res;
+                                    // let res2 = {
+                                    //     "resultData": "[{\"orgId\":\"411500\",\"orgName\":\"河南省信阳市\"},{\"orgId\":\"411502\",\"orgName\":\"河南省信阳市浉河区\"},{\"orgId\":\"411503\",\"orgName\":\"河南省信阳市平桥区\"},{\"orgId\":\"411521\",\"orgName\":\"河南省罗山县\"},{\"orgId\":\"411522\",\"orgName\":\"河南省光山县\"},{\"orgId\":\"411523\",\"orgName\":\"河南省新县\"},{\"orgId\":\"411524\",\"orgName\":\"河南省商城县\"},{\"orgId\":\"411525\",\"orgName\":\"河南省固始县\"},{\"orgId\":\"411526\",\"orgName\":\"河南省潢川县\"},{\"orgId\":\"411527\",\"orgName\":\"河南省淮滨县\"},{\"orgId\":\"411528\",\"orgName\":\"河南省息县\"}]",
+                                    //     "errCode": "0",
+                                    //     "msg": "成功"
+                                    // };
+                                    if (res2.errCode == 0) {
+                                        $("#district").html("");
+                                        let arr_area = JSON.parse(res2.resultData);
+                                        let opt_html = "";
+                                        arr_area.map((e, i) => {
+                                            opt_html +=
+                                                `<option value="${e.orgId}">${e.orgName}</option>`
+                                        });
+                                        $("#district").append(opt_html);
+                                    }
+                                },
+                                fail: function () {
+                                    // fail
+                                    $.dialog();
+                                },
+                            })
+                        })
+
+                        function showDistrict() {
+                            if ($("#city").val() == "") {
+                                $("#district").css("visibility", "hidden");
+                            } else {
+                                $("#district").css("visibility", "visible");
+                            }
+                        }
+                    })
+                </script>
+                <div class="input-wrap">
+                    <a href="javascript:check();" class="btn-lg">
+                        <span>查</span>询</a>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</body>
+<script src="../js/win_size.js"></script>
+<script>
+    function check() {
+        let name = $("input[name='name']").val().replace(/\s+/g, "");
+        let cityGuid = $("select#city").val();
+        let bureauGuid = $("select#district").val();
+        let district = $("select#district option:selected").text();
+        console.log(district);
+        let info = {
+            "name": name,
+            "bureauGuid": bureauGuid + "000000"
+        };
+        let jsoninfo = JSON.stringify(info);
+        if (name == "") {
+            $.dialog({
+                "txt": "输入姓名为空！"
+            });
+        } else {
+            $.ajax({
+                url: urlHead1 + police,
+                data: jsoninfo,
+                type: 'POST', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                dataType: "json",
+                success: function (res) {
+                    // success
+                    console.log(res);
+                    if (res.errCode == 0) {
+                        let data = res.resultData;
+                        let txt = data == 0 ? "恭喜您，你的名字在所选区域里独一无二！" : `有${data}个人和你重名`;
+                        $.dialog({
+                            "txt": txt
+                        });
+                    }
+                },
+                fail: function () {
+                    // fail
+                    $.dialog();
+                },
+            })
+        }
+        console.log(info);
+    }
+</script>
+
+</html>
